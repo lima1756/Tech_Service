@@ -151,32 +151,63 @@
           </div>
           <div id="sendmessage">Your message has been sent. Thank you!</div>
           <div id="errormessage"></div>
-          <form action="" method="post" role="form" class="contactForm">
+          <form action="/signUp" method="post" role="form" class="contactForm">
+            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
               <div class="col-md-6 col-sm-6 col-xs-12 left">
                 <div class="form-group">
-                    <input type="text" name="name" class="form-control form" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Tu Email" data-rule="email" data-msg="Porfavor ingrese un email valido" />
                     <div class="validation"></div>
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                    <input type="password" class="form-control" name="pass" id="pass" placeholder="Tu contraseña" data-rule="password"/>
                     <div class="validation"></div>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                    <input type="text" name="name" class="form-control form" id="name" placeholder="Tu nombre" data-rule="minlen:1" data-msg="Porfavor ingrese al menos un caracter" />
                     <div class="validation"></div>
                 </div>
+                <div class="form-group">
+                    <input type="text" name="last" class="form-control form" id="last" placeholder="Tu apellido" data-rule="minlen:1" data-msg="Porfavor ingrese al menos un caracter" />
+                    <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="cel" class="form-control form" id="last" placeholder="Tu celular" data-rule="minlen:1" data-msg="Porfavor ingrese al menos un caracter" />
+                    <div class="validation"></div>
+                </div>
+                
               </div>
               
               <div class="col-md-6 col-sm-6 col-xs-12 right">
                 <div class="form-group">
-                    <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                    <input type="text" name="tel" class="form-control form" id="last" placeholder="Tu telefono" data-rule="minlen:1" data-msg="Porfavor ingrese al menos un caracter" />
                     <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="ext" class="form-control form" id="last" placeholder="Tu extensión" data-rule="minlen:1" data-msg="Porfavor ingrese al menos un caracter" />
+                    <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="area" class="form-control form" id="last" placeholder="Tu area de trabajo" data-rule="minlen:1" data-msg="Porfavor ingrese al menos un caracter" />
+                    <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="work" class="form-control form" id="last" placeholder="Tu trabajo" data-rule="minlen:1" data-msg="Porfavor ingrese al menos un caracter" />
+                    <div class="validation"></div>
+                </div>
+                
+                <div class="form-group">
+                    <select class="form-control">
+                            <option value="null">Seleccione su país</option>
+                        @foreach ($items as $item)
+                            <option value='<?php echo $item->id ?>'><?php echo $item->name ?></option>
+                        @endforeach
+                    </select>
                 </div>
               </div>
               
-              <div class="col-xs-12">
+              <div class="col-xs-12" style="text-align:center">
                 <!-- Button -->
-                <button type="submit" id="submit" name="submit" class="form contact-form-button light-form-button oswald light">Registrarme</button>
+                <button type="submit" id="submit" name="submit" class="form btn btn-xl contact-form-button light-form-button" >Registrarme</button>
               </div>
           </form>
           
