@@ -23,3 +23,5 @@ Route::post('/signUp', 'signUp@index');
 Route::get('/signUp', function (){
     return redirect('/');
 });
+
+Route::post('/logIn', 'signIn@index');

@@ -12,6 +12,6 @@ class getCountries extends Controller
     public function index(){
         $items = DB::select('SELECT id, name FROM countries ORDER BY name ASC;');
         
-        return view('home', ['items' => $items]);
+        return view('noHome', ['items' => $items]);
     }
 }
