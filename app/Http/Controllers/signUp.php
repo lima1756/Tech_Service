@@ -7,6 +7,7 @@ use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class signUp extends Controller
 {
@@ -73,5 +74,5 @@ class signUp extends Controller
         }
         return "ok";
     }
-     
+    
 }

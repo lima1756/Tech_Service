@@ -213,5 +213,5 @@
 
 @endsection
 @endif
-<?php $user = Auth::id(); var_dump($user);?>    
+  
 

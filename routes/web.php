@@ -15,9 +15,13 @@ Route::get('/', function () {
     return view('home', getCountries::index());
 });
 */
-Route::get('/', 'getCountries@index');
+//Route::get('/', 'getCountries@index');
 Route::get('/home', 'getCountries@index');
 
+
+ Route::get('/', function (){
+    if(Auth::check()) return "funco"; else return "nope";
+});
 
 Route::post('/signUp', 'signUp@index');
 Route::get('/signUp', function (){
