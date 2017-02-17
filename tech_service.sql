@@ -455,7 +455,7 @@ CREATE TABLE `ticket_sus` (
 
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
-  `id_usuarios` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `email` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `pass` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `nombre` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
@@ -557,7 +557,7 @@ ALTER TABLE `ticket_sus`
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id_usuarios`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -612,7 +612,7 @@ ALTER TABLE `ticket_sus`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuarios` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
