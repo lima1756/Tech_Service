@@ -14,8 +14,7 @@ class signIn extends Controller
         $email = $request->get('email');
         $pass = $request->get('pass');
         $remember = $request->get('loginrem');
-        var_dump($remember);
-        if($remember = "on"){
+        if($remember == "on"){
             if (Auth::attempt(['email' => $email, 'password' => $pass], true)) {
                 if(Auth::check()){
                     $user = Auth::user();
@@ -31,20 +30,8 @@ class signIn extends Controller
             }
             return -1;
         }
-        else
-        {
-            $error = "sign-in";
-            //return view('noHome', ['items' => $items, 'signIn' => $error]);
-        }
-        /*$vals = DB::table('usuarios')->select("id_usuarios")->where('email', '=', $email)->where('pass', '=', $pass)->first();
-        if($vals==NULL){
-            $error = "sign-in";
-            return view('noHome', ['items' => $items, 'signIn' => $error]);
-        }
-        else{
-            $request->session()->put('user', $vals->id_usuarios);
-            return 1;
-        }*/
-        return -1;
+        $error = "sign-in";
+        //return -1;
+        return view('noHome', ['signIn' => $error]);
     }
 }

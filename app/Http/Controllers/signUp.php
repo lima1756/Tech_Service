@@ -25,7 +25,6 @@ class signUp extends Controller
         $work = $request->get('work');
         $area = $request->get('area');
         $country = $request->get('country');
-        $items = DB::select('SELECT id, name FROM countries ORDER BY name ASC;');
         if(!$this->notNulls($data)){
             array_push($error, "NULLS");
         }
@@ -46,7 +45,7 @@ class signUp extends Controller
                 'trabajo' => $work, 'id_region' => $country]
             );
         }
-        return view('noHome', ['items' => $items, 'error' => $error, 'goTo' => "registro"]);
+        return view('noHome', ['error' => $error, 'goTo' => "registro"]);
     }
     
     private function notNulls(array $data){

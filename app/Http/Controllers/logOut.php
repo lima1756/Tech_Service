@@ -11,8 +11,7 @@ class logOut extends Controller
 {
     public function index(){
         Auth::logout();
-        $items = DB::select('SELECT id, name FROM countries ORDER BY name ASC;');
         
-        return view('noHome', ['items' => $items]);
+        return view('noHome');
     }
 }

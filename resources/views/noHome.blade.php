@@ -55,7 +55,7 @@
           <li class="btn-trial"><a href="#registro">Registrate</a></li>
   @endsection        
   @section('extra1')
-  
+  <?php $items = DB::select('SELECT id, name FROM countries ORDER BY name ASC;'); ?>
     <!--/ Navigation bar-->
     <!--Modal box-->
     @if ($type=="null")
