@@ -1,6 +1,39 @@
-@if (!Auth::check())
 @extends('layouts.home')
 @section('title', 'Welcome!')
+<?php
+  $type="0";
+  if(null!==Auth::id()){
+    $id=Auth::id();
+    $type="null";
+    $query=DB::table('mortals')->where('id_usuario', '=', $id)->first();
+    if(count($query)>0){
+      $type="mortal";
+    }
+    else{
+      $query=DB::table('superusers')->where('id_usuario', '=', $id)->first();
+      if(count($query)>0){
+        $type="SU";
+      }
+    }
+  }
+?>
+
+@if($type=="SU")
+  @section('menu')
+    <li><a href="dashboard">Dashboard</a></li>
+    <li class="btn-trial"><a href="logOut">Cerrar Sesión</a></li>
+  @endsection   
+
+@elseif($type=="mortal")
+  @section('menu')
+    <li><a href="dashboard">Tickets</a></li>
+    <li><a href="knowledge">knowledge</a></li>
+    <li class="btn-trial"><a href="logOut">Cerrar Sesión</a></li>
+  @endsection   
+
+
+@else
+
 @section('head')
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Candal|Alegreya+Sans">
 @endsection
@@ -13,6 +46,7 @@
     }
     </script>
     @endif
+    
   @endsection
   
   @section('menu')
@@ -21,8 +55,23 @@
           <li class="btn-trial"><a href="#registro">Registrate</a></li>
   @endsection        
   @section('extra1')
+  
     <!--/ Navigation bar-->
     <!--Modal box-->
+    @if ($type=="null")
+      <script>
+        window.onload = function() {
+            window.location = "#login";   
+            $('#login').modal('show');
+            var errorDiv2 = document.getElementById('errorlogIn');
+            document.getElementById('errorlogIn').style.visibility = "visible";
+            document.getElementById('errorlogIn').style.display = "block";
+            errorDiv2.innerHTML=errorDiv2.innerHTML+"Los datos de inicio son erroneos";
+        }
+    </script>
+    @else
+    
+    @endif
     <div class="modal fade" id="login" role="dialog">
       <div class="modal-dialog modal-sm">
       
@@ -35,6 +84,7 @@
           <div class="modal-body padtrbl">
 
             <div class="login-box-body">
+            <div id="errorlogIn" class="alert alert-danger" style="visibility:hidden;display: none;"></div>
               <div class="form-group">
                 <form name="logIn" id="loginForm" action="logIn" method="post">
                   <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
@@ -69,6 +119,7 @@
       </div>
     </div>
     <!--/ Modal box-->
+    
     @endsection
    
     @section('extra')
@@ -191,27 +242,13 @@
       </div>
     </section>
     <!--/ registro-->
-    <!--Footer-->
-    <footer id="footer" class="footer">
-      <div class="container text-center">
-
-        ©2017 Tech-Service. Todos los derechos reservados
-        <div class="credits">
-            <!-- 
-                All the links in the footer should remain intact. 
-                You can delete the links only if you purchased the pro version.
-                Licensing information: https://bootstrapmade.com/license/
-                Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Mentor
-            -->
-            Designed by <a href="https://bootstrapmade.com/">Free Bootstrap Themes</a>
-        </div>
-      </div>
-    </footer>
-    <!--/ Footer-->
+    
 
     
 
 @endsection
-@endif
+
+
   
 
+@endif

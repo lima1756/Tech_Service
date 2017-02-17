@@ -17,11 +17,7 @@ Route::get('/', function () {
 */
 //Route::get('/', 'getCountries@index');
 Route::get('/home', 'getCountries@index');
-
-
- Route::get('/', function (){
-    if(Auth::check()) return "funco"; else return "nope";
-});
+Route::get('/', 'getCountries@index');
 
 Route::post('/signUp', 'signUp@index');
 Route::get('/signUp', function (){
@@ -29,3 +25,5 @@ Route::get('/signUp', function (){
 });
 
 Route::post('/logIn', 'signIn@index');
+
+Route::get('/logOut', 'logOut@index');

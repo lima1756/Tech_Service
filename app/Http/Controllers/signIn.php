@@ -17,7 +17,6 @@ class signIn extends Controller
         if (Auth::attempt(['email' => $email, 'password' => $pass])) {
             if(Auth::check()){
                 $user = Auth::user();
-                var_dump($user);
                 return view('noHome');//
                 return 105;
             }

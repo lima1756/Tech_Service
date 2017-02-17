@@ -2,11 +2,18 @@
 <html lang="es">
     <head>
         <title>@yield('title')</title>
-        @section('head')
+        
         {{ HTML::style('css/bootstrap.min.css') }}
         {{ HTML::style('css/imagehover.min.css') }}
         {{ HTML::style('css/style.css') }}
         {{ HTML::style('css/font-awesome.min.css') }}
+        {{ HTML::script('js/jquery.min.js') }}
+        {{ HTML::script('js/jquery.min.js') }}
+        {{ HTML::script('js/jquery.easing.min.js') }}
+        {{ HTML::script('js/bootstrap.min.js') }}
+        {{ HTML::script('js/custom.js') }}
+        
+         @section('head')
     </head>
     <body>
         @section('header')
@@ -102,10 +109,23 @@
         <!--/ feature-->
         @section('extra')
         @show
-        {{ HTML::script('js/jquery.min.js') }}
-        {{ HTML::script('js/jquery.easing.min.js') }}
-        {{ HTML::script('js/bootstrap.min.js') }}
-        {{ HTML::script('js/custom.js') }}
-        {{ HTML::script('js/contactform.js') }}
+        <!--Footer-->
+    <footer id="footer" class="footer">
+      <div class="container text-center">
+
+        ©2017 Tech-Service. Todos los derechos reservados
+        <div class="credits">
+            <!-- 
+                All the links in the footer should remain intact. 
+                You can delete the links only if you purchased the pro version.
+                Licensing information: https://bootstrapmade.com/license/
+                Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Mentor
+            -->
+            Designed by <a href="https://bootstrapmade.com/">Free Bootstrap Themes</a>
+        </div>
+      </div>
+    </footer>
+    <!--/ Footer-->
+        
     </body>
 </html>
