@@ -102,7 +102,7 @@
                       <div class="col-xs-12">
                           <div class="checkbox icheck">
                               <label>
-                                <input type="checkbox" id="loginrem" > Remember Me
+                                <input type="checkbox" id="loginrem" name="loginrem"> Remember Me
                               </label>
                           </div>
                       </div>

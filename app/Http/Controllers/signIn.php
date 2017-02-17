@@ -13,14 +13,23 @@ class signIn extends Controller
         $data = $request->all();
         $email = $request->get('email');
         $pass = $request->get('pass');
-        
-        if (Auth::attempt(['email' => $email, 'password' => $pass])) {
+        $remember = $request->get('loginrem');
+        var_dump($remember);
+        if($remember = "on"){
+            if (Auth::attempt(['email' => $email, 'password' => $pass], true)) {
+                if(Auth::check()){
+                    $user = Auth::user();
+                    return view('noHome');//
+                }
+                return -1;
+            }
+        }
+        elseif (Auth::attempt(['email' => $email, 'password' => $pass])) {
             if(Auth::check()){
                 $user = Auth::user();
                 return view('noHome');//
-                return 105;
             }
-            return 55;
+            return -1;
         }
         else
         {
@@ -36,6 +45,6 @@ class signIn extends Controller
             $request->session()->put('user', $vals->id_usuarios);
             return 1;
         }*/
-        return 0;
+        return -1;
     }
 }
