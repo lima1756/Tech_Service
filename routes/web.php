@@ -26,3 +26,6 @@ Route::get('/signUp', function (){
 Route::post('/logIn', 'signIn@index');
 
 Route::get('/logOut', 'logOut@index');
+Route::get('/knowledge', function() {
+    return view('knowledge');
+})->middleware('checkMortal');

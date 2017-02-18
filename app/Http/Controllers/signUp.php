@@ -58,10 +58,10 @@ class signUp extends Controller
     }
 
     private function checkemail($email){
-        $vals = DB::table('users')->select('email', 'id_usuarios')->where('email', '=', $email)->get();
+        $vals = DB::table('users')->select('email', 'id')->where('email', '=', $email)->get();
         if(count($vals)>0)
         {
-            $vals = DB::table('informes')->where('id_usuario', '=', $vals[0]->id_usuarios)->first();
+            $vals = DB::table('informes')->where('id_usuario', '=', $vals[0]->id)->first();
             if(count($vals)>0)
             {
                 return "denied";
