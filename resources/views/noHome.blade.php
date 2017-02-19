@@ -26,7 +26,7 @@
 
 @elseif($type=="mortal")
   @section('menu')
-    <li><a href="dashboard">Tickets</a></li>
+    <li><a href="tickets">Tickets</a></li>
     <li><a href="knowledge">knowledge</a></li>
     <li class="btn-trial"><a href="logOut">Cerrar Sesión</a></li>
   @endsection   

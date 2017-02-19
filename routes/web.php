@@ -29,3 +29,7 @@ Route::get('/logOut', 'logOut@index');
 Route::get('/knowledge', function() {
     return view('knowledge');
 })->middleware('checkMortal');
+
+Route::get('/tickets', function() {
+    return view('tickets');
+})->middleware('checkMortal');
