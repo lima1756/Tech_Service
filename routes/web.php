@@ -33,3 +33,17 @@ Route::get('/knowledge', function() {
 Route::get('/tickets', function() {
     return view('tickets');
 })->middleware('checkMortal');
+
+//ajaxMRT=ajax mortal request tickets
+Route::post('/ajaxMRT', 'getUserTickets@index')->middleware('checkMortal');
+//ajaxMRTI=ajax mortal request tickets Image
+Route::post('/ajaxMRTI', 'getUserTickets@getImage')->middleware('checkMortal');
+//ajaxMRTSI=ajax mortal request tickets SUsInfo
+Route::post('/ajaxMRTSI', 'getUserTickets@getTechData')->middleware('checkMortal');
+
+Route::post('/tickets/newTicket', 'newTicket@index')->middleware('checkMortal');
+
+
+Route::get('/dashboard', function() {
+    return view('dashboard');
+})->middleware('checkSU');
