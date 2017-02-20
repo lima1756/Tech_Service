@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-02-2017 a las 03:41:26
+-- Tiempo de generación: 20-02-2017 a las 01:54:12
 -- Versión del servidor: 5.7.14
 -- Versión de PHP: 7.0.10
 
@@ -36,7 +36,7 @@ CREATE TABLE `archivos` (
   `tamanio` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `file_name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `id_nota` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -321,10 +321,18 @@ INSERT INTO `countries` (`id`, `name`) VALUES
 DROP TABLE IF EXISTS `estados`;
 CREATE TABLE `estados` (
   `id_estado` int(11) NOT NULL,
-  `fecha_hora` int(11) NOT NULL,
+  `fecha_hora` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `estado` enum('Nuevo','Espera','Diferido','Completado','Sin resolver') COLLATE utf8_unicode_ci NOT NULL,
   `detalles` text COLLATE utf8_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `estados`
+--
+
+INSERT INTO `estados` (`id_estado`, `fecha_hora`, `estado`, `detalles`) VALUES
+(1, '2017-02-19 16:12:05', 'Nuevo', NULL),
+(2, '2017-02-19 16:12:05', 'Nuevo', NULL);
 
 -- --------------------------------------------------------
 
@@ -337,7 +345,21 @@ CREATE TABLE `estado_anteriors` (
   `id_estado_ant` int(11) NOT NULL,
   `id_estado` int(11) NOT NULL,
   `fecha_hora_cambio` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `imgs_knowledge`
+--
+
+DROP TABLE IF EXISTS `imgs_knowledge`;
+CREATE TABLE `imgs_knowledge` (
+  `id` int(11) NOT NULL,
+  `id_knowledge` int(11) NOT NULL,
+  `nombre` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `extension` varchar(5) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -349,9 +371,20 @@ DROP TABLE IF EXISTS `imgs_tickets`;
 CREATE TABLE `imgs_tickets` (
   `id_img` int(11) NOT NULL,
   `id_ticket` int(11) NOT NULL,
-  `nombre` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `nombre` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `extension` varchar(5) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `imgs_tickets`
+--
+
+INSERT INTO `imgs_tickets` (`id_img`, `id_ticket`, `nombre`, `extension`) VALUES
+(3, 7, 'CQ4aFwmWByGD3o5x0rXDO43qIdZZouagzRETDLfB.jpeg', 'jpeg'),
+(4, 8, 'bu9dPmlREFGSRnu9CJ5cmXUdjWBaf5xov1Ra8UeE.jpeg', 'jpeg'),
+(5, 9, 'QHMNf40HVQaTSC4cUOQbAXNguHpC6nbIYVqNjUkX.jpeg', 'jpeg'),
+(6, 10, 'Y3emDD2SB82wkQOC3wuETqpZmBEFsbdpKGDEohtS.jpeg', 'jpeg'),
+(7, 17, 'B8DBJ5a0RUqpsYr4iWJbNjLyE9yrTY7R2JIWBkvd.jpeg', 'jpeg');
 
 -- --------------------------------------------------------
 
@@ -363,6 +396,36 @@ DROP TABLE IF EXISTS `informes`;
 CREATE TABLE `informes` (
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `informes`
+--
+
+INSERT INTO `informes` (`id_usuario`) VALUES
+(5200);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `knowledge`
+--
+
+DROP TABLE IF EXISTS `knowledge`;
+CREATE TABLE `knowledge` (
+  `id` int(11) NOT NULL,
+  `pregunta` text COLLATE utf8_unicode_ci NOT NULL,
+  `respuesta` text COLLATE utf8_unicode_ci NOT NULL,
+  `id_superuser` int(11) NOT NULL,
+  `tema` varchar(30) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `knowledge`
+--
+
+INSERT INTO `knowledge` (`id`, `pregunta`, `respuesta`, `id_superuser`, `tema`) VALUES
+(1, '¿Puedo eliminar System32?', 'No, no lo haga, son archivos escenciales del sistema', 5504, 'Sistema'),
+(2, '¿Me pide actualizar lo hago?', 'Si es una alerta del sistema y estas seguro que es el sistema entonces si. En caso de duda porfavor genere un ticket.', 5504, 'Sistema');
 
 -- --------------------------------------------------------
 
@@ -376,7 +439,7 @@ CREATE TABLE `llamadas` (
   `fecha_hora` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_ticket_su` int(11) NOT NULL,
   `detalles` text COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -388,6 +451,13 @@ DROP TABLE IF EXISTS `mortals`;
 CREATE TABLE `mortals` (
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `mortals`
+--
+
+INSERT INTO `mortals` (`id_usuario`) VALUES
+(5505);
 
 -- --------------------------------------------------------
 
@@ -416,6 +486,14 @@ CREATE TABLE `superusers` (
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `superusers`
+--
+
+INSERT INTO `superusers` (`id_usuario`) VALUES
+(5500),
+(5504);
+
 -- --------------------------------------------------------
 
 --
@@ -427,8 +505,16 @@ CREATE TABLE `tickets` (
   `id_ticket` int(11) NOT NULL,
   `id_mortal` int(11) NOT NULL,
   `fecha_hora` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `pregunta` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `descripcion` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `tickets`
+--
+
+INSERT INTO `tickets` (`id_ticket`, `id_mortal`, `fecha_hora`, `pregunta`, `descripcion`) VALUES
+(17, 5505, '2017-02-19 17:00:34', 'Mi preguntita', 'Una descripcion');
 
 -- --------------------------------------------------------
 
@@ -443,21 +529,28 @@ CREATE TABLE `ticket_sus` (
   `id_ticket` int(11) NOT NULL,
   `fecha_hora` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `porcentaje` int(11) NOT NULL,
-  `id_estado` int(11) NOT NULL,
-  `prioridad` enum('alto','medio','bajo') COLLATE utf8_unicode_ci NOT NULL
+  `id_estado` int(11) DEFAULT NULL,
+  `prioridad` enum('alto','medio','bajo') COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `ticket_sus`
+--
+
+INSERT INTO `ticket_sus` (`id_ticketSU`, `id_SU`, `id_ticket`, `fecha_hora`, `porcentaje`, `id_estado`, `prioridad`) VALUES
+(9, 5504, 17, '2017-02-19 17:00:34', 65, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Estructura de tabla para la tabla `users`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
-CREATE TABLE `usuarios` (
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `pass` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(61) COLLATE utf8_unicode_ci NOT NULL,
   `nombre` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `apellido` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `cel` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
@@ -465,8 +558,21 @@ CREATE TABLE `usuarios` (
   `ext` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
   `areaTrabajo` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `trabajo` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `id_region` int(11) NOT NULL
+  `id_region` int(11) NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `password`, `nombre`, `apellido`, `cel`, `tel`, `ext`, `areaTrabajo`, `trabajo`, `id_region`, `remember_token`) VALUES
+(5200, 'asdasd@asd.com', 'asdf', 'asdf', 'sadf', 'ads', 'asdf', 'asd', 'asf', 'asdf', 55, NULL),
+(5500, '1@1.com', '123', '123', '123', '123', '123', '123', '123', '123', 123, NULL),
+(5501, 'luisivanmorett@gmail.com', '123456789', 'Luis Iván', 'Morett Arévalo', '3311516589', '38254926', '123', 'una area', 'la empresa', 16, NULL),
+(5503, 'luisivanmorett@hotmail.com', '123123123', '654987', '789456', '123000', '00000', '99999', '9999', '6666', 1, NULL),
+(5504, 'l@l.com', '$2y$10$KZhWELgALLT9P7LyC/Mvwea5FnKJf4Ef733QDXJFDVpjMAtop8.oS', '123', '123', '123123', '123123', '12', '123123', '123123', 17, 'wXmT1LEsjifjWfyyWpeUHWD4bWaGBSk79MA1loThc7novGYBlu8EppeZLhm6'),
+(5505, 'i@i.com', '$2y$10$5TASH5o6wlg6bW48gqRBQO4.N0dixHHVYyDizCMzH.Ghnp9WshdcW', '231231123', '123123123', '123123123', '123123123', '123', '123123123', '123123123', 75, 'T7mTrTWEEEIeF8Y1bvmqPo9x1AlYYtnUvmolvohqmiYAtrBfFv3HsII8gEoM');
 
 --
 -- Índices para tablas volcadas
@@ -499,6 +605,13 @@ ALTER TABLE `estado_anteriors`
   ADD PRIMARY KEY (`id_estado_ant`);
 
 --
+-- Indices de la tabla `imgs_knowledge`
+--
+ALTER TABLE `imgs_knowledge`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_knowledge` (`id_knowledge`);
+
+--
 -- Indices de la tabla `imgs_tickets`
 --
 ALTER TABLE `imgs_tickets`
@@ -510,6 +623,13 @@ ALTER TABLE `imgs_tickets`
 --
 ALTER TABLE `informes`
   ADD KEY `id_usuario` (`id_usuario`);
+
+--
+-- Indices de la tabla `knowledge`
+--
+ALTER TABLE `knowledge`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_superuser` (`id_superuser`);
 
 --
 -- Indices de la tabla `llamadas`
@@ -537,6 +657,7 @@ ALTER TABLE `notas`
 -- Indices de la tabla `superusers`
 --
 ALTER TABLE `superusers`
+  ADD PRIMARY KEY (`id_usuario`),
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
@@ -554,10 +675,11 @@ ALTER TABLE `ticket_sus`
   ADD KEY `id_ticket` (`id_ticket`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indices de la tabla `users`
 --
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_region` (`id_region`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -577,7 +699,7 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT de la tabla `estados`
 --
 ALTER TABLE `estados`
-  MODIFY `id_estado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `estado_anteriors`
 --
@@ -587,7 +709,12 @@ ALTER TABLE `estado_anteriors`
 -- AUTO_INCREMENT de la tabla `imgs_tickets`
 --
 ALTER TABLE `imgs_tickets`
-  MODIFY `id_img` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_img` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT de la tabla `knowledge`
+--
+ALTER TABLE `knowledge`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `llamadas`
 --
@@ -602,17 +729,17 @@ ALTER TABLE `notas`
 -- AUTO_INCREMENT de la tabla `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id_ticket` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ticket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT de la tabla `ticket_sus`
 --
 ALTER TABLE `ticket_sus`
-  MODIFY `id_ticketSU` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ticketSU` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT de la tabla `users`
 --
-ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5506;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
