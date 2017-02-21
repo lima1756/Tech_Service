@@ -25,8 +25,11 @@ class newTicket extends Controller
                 DB::table('imgs_tickets')->insertGetId(
                     ['id_ticket' => $ticketID, 'nombre' => $name, 'extension' => $fileExt]
                 );
+                $id_estado = DB::table('estados')->insertGetId(
+                    ['estado' => 'Nuevo']
+                );
                 $ticketID2 = DB::table('ticket_sus')->insertGetId(
-                    ['id_SU' => $mySU, 'id_ticket' => $ticketID, 'porcentaje' => 0]
+                    ['id_SU' => $mySU, 'id_ticket' => $ticketID, 'porcentaje' => 0, 'id_estado' => $id_estado]
                 );
                 return redirect('/tickets');
             }
@@ -38,8 +41,11 @@ class newTicket extends Controller
             $ticketID = DB::table('tickets')->insertGetId(
                 ['id_mortal' => Auth::id(), 'pregunta' => $request->preguntaForm, 'descripcion' => $request->descripcionForm]
             );
-            $ticketID2 = DB::table('ticket_sus')->insertGetId(
-                    ['id_SU' => $mySU, 'id_ticket' => $ticketID, 'porcentaje' => 0]
+            $id_estado = DB::table('estados')->insertGetId(
+                    ['estado' => 'Nuevo']
+                );
+                $ticketID2 = DB::table('ticket_sus')->insertGetId(
+                    ['id_SU' => $mySU, 'id_ticket' => $ticketID, 'porcentaje' => 0, 'id_estado' => $id_estado]
                 );
                 return redirect('/tickets');
         }

@@ -15,7 +15,7 @@
                     <i class="fa fa-pie-chart fa-fw"></i> Estado de solicitudes
                 </div>
                 <div class="panel-body">
-                    <div id="morris-donut-chart"></div>
+                    <div id="estado-solicitud"></div>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -29,9 +29,7 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div>
-                        <div id="morris-area-chart"></div>
-                    </div>
+                        <div id="solicitudes"></div>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -44,8 +42,36 @@
                 <div class="panel-heading">
                     <i class="fa fa-file-text-o fa-fw"></i> Atrasados
                 </div>
+                <?php $pendientes = DB::table('ticket_sus')->select(DB::RAW('TIME_TO_SEC(TIMEDIFF(NOW(), ticket_sus.fecha_hora)) as secs'), 'prioridad', 'estado')->join('estados', 'estados.id_estado', '=', 'ticket_sus.id_estado')->where('id_SU', Auth::id())->get(); 
+                $atrasados = array();
+                $atrasados[0]=0;
+                $atrasados[1]=0;
+                $atrasados[2]=0;
+                foreach($pendientes as $pendiente){
+                    if($pendiente->estado!='Diferido' && $pendiente->estado!='Completado' && $pendiente->estado!='Sin Resolver')
+                    if($pendiente->prioridad=="alto"){
+                        if($pendiente->secs > 86400){
+                            $atrasados[0]++;
+                        }
+                    }
+                    elseif($pendiente->prioridad=="medio"){
+                        if($pendiente->secs > 172800){
+                            $atrasados[1]++;
+                        }
+                    }
+                    elseif($pendiente->prioridad=="bajo"){
+                        if($pendiente->secs > 259200){
+                            $atrasados[2]++;
+                        }
+                    }
+                }
+                ?>
+                
                 <div class="panel-body">
-
+                <h3>Prioridad: </h3>
+                <h4>Alta: </h4> <p>{{$atrasados[0]}}</p>
+                <h4>Media: </h4> <p>{{$atrasados[1]}}</p>
+                <h4>Baja: </h4> <p>{{$atrasados[2]}}</p>
                 </div>
             </div>
             <div class="panel panel-default">
@@ -53,7 +79,7 @@
                     <i class="fa fa-pie-chart fa-fw"></i> Solicitudes por paises
                 </div>
                 <div class="panel-body">
-                    <div id="morris-donut-chart"></div>
+                    <div id="paises"></div>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -63,4 +89,66 @@
         <!-- /.col-lg-4 -->
     </div>
     <!-- /.row -->
+@endsection
+
+@section('footer')
+<?php
+    $paises = DB::table('tickets')->join('users', 'users.id', '=', 'tickets.id_mortal')->join('countries', 'users.id_region', '=', 'countries.id')->
+                select(DB::RAW('count(id_mortal) AS totales'), 'countries.name', 'countries.id')->groupBy('id_mortal')->get();
+    $estados = DB::table('estados')->join('ticket_sus', 'estados.id_estado', '=', 'ticket_sus.id_estado')->
+                select(DB::RAW('count(estados.estado) AS conteo'), 'estados.estado')->groupBy('estados.estado')->get();
+    $total = 0;
+    foreach($estados as $p):
+        if($p->estado == "Completado" || $p->estado == "Sin resolver"):
+            $total+=$p->conteo;
+        endif;
+    endforeach;
+    $count = array();
+    foreach($paises as $pais){
+        if(isset($count[$pais->id])){
+            $count[$pais->id][0]+=$pais->totales;
+        }
+        else{
+            $count[$pais->id]=[0, $pais->name];
+            $count[$pais->id][0]+=$pais->totales;
+        }
+    }
+?>
+<script>
+Morris.Donut({
+  element: 'paises',
+  data: [
+    @foreach($count as $c)
+        {label: '{{$c[1]}}', value: {{$c[0]}}},
+    @endforeach
+  ]
+});
+Morris.Donut({
+  element: 'estado-solicitud',
+  data: [
+    @foreach($estados as $p)
+        @if($p->estado == "Nuevo" || $p->estado == "Espera" || $p->estado == "Diferido")
+            {label: '{{$p->estado}}', value: {{$p->conteo}}},
+        @endif
+    @endforeach
+  ]
+});
+
+Morris.Bar({
+  element: 'solicitudes',
+    data: [
+        @foreach($estados as $p)
+            @if($p->estado == "Completado" || $p->estado == "Sin resolver")
+                {x: '{{$p->estado}}', y: {{$p->conteo}}},
+            @endif
+        @endforeach
+        {x: 'Total', y: {{$total}}}
+
+  ],
+  xkey: 'x',
+  ykeys: 'y',
+  labels: 'Graficas'
+});
+</script>
+
 @endsection
