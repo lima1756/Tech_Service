@@ -16,6 +16,11 @@
                 </div>
                 <div class="panel-body">
                     <div id="estado-solicitud"></div>
+                    <div class="text-center">
+                            <a href="/dashboard/tickets/Espera"><button class="btn btn-info">Ver en espera</button></a>
+                            <a href="/dashboard/tickets/Nuevo"><button class="btn btn-info">Ver nuevos</button></a>
+                            <a href="/dashboard/tickets/Diferido"><button class="btn btn-info">Ver diferidos</button></a>
+                        </div>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -30,6 +35,11 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                         <div id="solicitudes"></div>
+                        <div class="text-center">
+                            <a href="/dashboard/tickets/Completado"><button class="btn btn-info">Ver Completadas</button></a>
+                            <a href="/dashboard/tickets/Sin_resolver"><button class="btn btn-info">Ver Sin resolver</button></a>
+                            <a href="/dashboard/tickets/all"><button class="btn btn-info">Ver Total</button></a>
+                        </div>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -42,36 +52,37 @@
                 <div class="panel-heading">
                     <i class="fa fa-file-text-o fa-fw"></i> Atrasados
                 </div>
-                <?php $pendientes = DB::table('ticket_sus')->select(DB::RAW('TIME_TO_SEC(TIMEDIFF(NOW(), ticket_sus.fecha_hora)) as secs'), 'prioridad', 'estado')->join('estados', 'estados.id_estado', '=', 'ticket_sus.id_estado')->where('id_SU', Auth::id())->get(); 
-                $atrasados = array();
-                $atrasados[0]=0;
-                $atrasados[1]=0;
-                $atrasados[2]=0;
-                foreach($pendientes as $pendiente){
-                    if($pendiente->estado!='Diferido' && $pendiente->estado!='Completado' && $pendiente->estado!='Sin Resolver')
-                    if($pendiente->prioridad=="alto"){
-                        if($pendiente->secs > 86400){
-                            $atrasados[0]++;
+                <?php 
+                    $pendientes = DB::table('ticket_sus')->select(DB::RAW('TIME_TO_SEC(TIMEDIFF(NOW(), ticket_sus.fecha_hora)) as secs'), 'prioridad', 'estado')->join('estados', 'estados.id_estado', '=', 'ticket_sus.id_estado')->where('id_SU', Auth::id())->get(); 
+                    $atrasados = array();
+                    $atrasados[0]=0;
+                    $atrasados[1]=0;
+                    $atrasados[2]=0;
+                    foreach($pendientes as $pendiente){
+                        if($pendiente->estado!='Diferido' && $pendiente->estado!='Completado' && $pendiente->estado!='Sin Resolver')
+                        if($pendiente->prioridad=="alto"){
+                            if($pendiente->secs > 86400){
+                                $atrasados[0]++;
+                            }
+                        }
+                        elseif($pendiente->prioridad=="medio"){
+                            if($pendiente->secs > 172800){
+                                $atrasados[1]++;
+                            }
+                        }
+                        elseif($pendiente->prioridad=="bajo"){
+                            if($pendiente->secs > 259200){
+                                $atrasados[2]++;
+                            }
                         }
                     }
-                    elseif($pendiente->prioridad=="medio"){
-                        if($pendiente->secs > 172800){
-                            $atrasados[1]++;
-                        }
-                    }
-                    elseif($pendiente->prioridad=="bajo"){
-                        if($pendiente->secs > 259200){
-                            $atrasados[2]++;
-                        }
-                    }
-                }
                 ?>
                 
                 <div class="panel-body">
                 <h3>Prioridad: </h3>
-                <h4>Alta: </h4> <p>{{$atrasados[0]}}</p>
-                <h4>Media: </h4> <p>{{$atrasados[1]}}</p>
-                <h4>Baja: </h4> <p>{{$atrasados[2]}}</p>
+                <a href="/dashboard/tickets/alto"><h4>Alta: </h4> <p>{{$atrasados[0]}}</p></a>
+                <a href="/dashboard/tickets/medio"><h4>Media: </h4> <p>{{$atrasados[1]}}</p></a>
+                <a href="/dashboard/tickets/bajo"><h4>Baja: </h4> <p>{{$atrasados[2]}}</p></a>
                 </div>
             </div>
             <div class="panel panel-default">

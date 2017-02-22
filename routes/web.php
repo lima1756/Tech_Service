@@ -47,3 +47,14 @@ Route::post('/tickets/newTicket', 'newTicket@index')->middleware('checkMortal');
 Route::get('/dashboard', function() {
     return view('dashboard');
 })->middleware('checkSU');
+
+Route::get('/dashboard/tickets/{state}', function ($state){
+    return view('ticketsSU', ['state'=>$state]);
+})->middleware('checkSU');
+
+//ajaxSRT=ajax SU request tickets
+Route::post('/ajaxSRT', 'getTicketDataSU@index')->middleware('checkSU');
+//ajaxSRTI=ajax SU request ticket states
+Route::post('/ajaxSRTI', 'getTicketDataSU@imgs')->middleware('checkSU');
+//ajaxSRTS=ajax SU request ticket states
+Route::post('/ajaxSRTS', 'getTicketDataSU@states')->middleware('checkSU');

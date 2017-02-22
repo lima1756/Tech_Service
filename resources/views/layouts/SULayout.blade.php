@@ -69,7 +69,9 @@
                         <li>
                             <a href="/dashboard/knowledge"><i class="fa fa-question"></i> Knowledge</a>
                         </li>
-                        
+                        <li>
+                            <a href="/dashboard/tickets/all"><i class="fa fa-file-text"></i> Tickets</a> 
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
