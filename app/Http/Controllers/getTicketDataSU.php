@@ -15,17 +15,25 @@ class getTicketDataSU extends Controller
         $tickets = DB::table('tickets')
         ->join('ticket_sus', 'tickets.id_ticket', '=', 'ticket_sus.id_ticket')
         ->join('estados', 'ticket_sus.id_estado', '=', 'estados.id_estado')
-        ->select('tickets.pregunta', 'tickets.descripcion', 'ticket_sus.porcentaje', 'ticket_sus.prioridad', 'ticket_sus.id_estado', 'estados.estado', 'estados.detalles')
+        ->select('tickets.pregunta', 'tickets.descripcion', 'ticket_sus.porcentaje', 'ticket_sus.prioridad', 'ticket_sus.id_estado', 
+                'estados.estado', 'estados.detalles', 'ticket_sus.id_ticketSU')
         ->where('ticket_sus.id_ticket', $request->ticketid)->get(); //toSql()  To get the sql query
         return json_encode($tickets[0]);
     }
 
     public function states(Request $request){
-
+       /* $img = DB::table('imgs_tickets')->select('nombre', 'extension')->where('id_ticket',$request->ticketid)->get();
+        if(sizeof($img)>0)
+            return json_encode($img[0]);
+        else
+            return "-1";*/
     }
 
     public function imgs(Request $request){
-        $tickets = DB::table('tickets')->select('pregunta','descripcion')->where('id_ticket',$request->ticketid)->get();
-        return json_encode($tickets[0]);
+        $img = DB::table('imgs_tickets')->select('nombre', 'extension')->where('id_ticket',$request->ticketid)->get();
+        if(sizeof($img)>0)
+            return json_encode($img[0]);
+        else
+            return "-1";
     }
 }

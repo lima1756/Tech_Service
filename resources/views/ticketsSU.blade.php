@@ -1,4 +1,10 @@
+@extends('layouts.SULayout')
+
+@section('header')
 <?php
+    if(!isset($state)){
+        $state = "all";
+    }
     if($state == "all"){
         $questions = DB::table('ticket_sus')->join('tickets', 'ticket_sus.id_ticket', '=', 'tickets.id_ticket')->join('estados', 'estados.id_estado', '=', 'ticket_sus.id_estado')->
                 select('ticket_sus.id_ticket', 'tickets.pregunta', 'estados.estado', 'tickets.fecha_hora')->
@@ -41,24 +47,65 @@
         }
         $questions = $atrasados;
     }
-    else{
-        if($state == "Sin_resolver")
-            $state = "Sin resolver";
+    elseif($state == "Sin_resolver"){
+        $state = "Sin resolver";
         $questions = DB::table('ticket_sus')->join('tickets', 'ticket_sus.id_ticket', '=', 'tickets.id_ticket')->join('estados', 'estados.id_estado', '=', 'ticket_sus.id_estado')->
                 select('ticket_sus.id_ticket', 'tickets.pregunta', 'estados.estado', 'tickets.fecha_hora')->
                 where([
                     ['ticket_sus.id_SU', '=', Auth::id()],
                     ['estados.estado', '=', $state]
-                ])->get();
-              
+                ])->get();    
+    }
+    elseif(is_numeric($state))
+    {
+        echo("<script>
+                window.onload = function() {
+                    $('#radio".$state."').prop(\"checked\", true);
+                    $.ajaxSetup({
+                        headers: {
+                                'X-CSRF-TOKEN': '".csrf_token()."'
+                            }
+                        })
+                    $.post(\"/ajaxSRT\", {
+                        'ticketid': ".$state."
+                    },
+                    function(data, status){
+                        var json = JSON.parse(data);
+                        var message = json.descripcion.replace(/\\n/g, \"<br />\");
+                        $('#pregunta-container').show();
+                        $('#pregunta').html(json.pregunta);
+                        $('#descripcion').html(message);
+                        $('#estado_actual').val(json.estado);
+                        $('#detalles').val(json.detalles);
+                        $('#porcentaje').val(json.porcentaje);
+                        $('#prioridad').val(json.prioridad);
+                        $('#ticket_su').val(json.id_ticketSU);
+                        $('#state').val(json.id_estado);
+                        $('#foro').attr(\"href\", \"/dashboard/foro/\"+json.id_ticketSU)
+                        $('#llamadas').attr(\"href\", \"/dashboard/llamadas/\"+json.id_ticketSU)
+                    });
+                }
 
-                
+        
+            </script>");
+            $state = "all";
+        $questions = DB::table('ticket_sus')->join('tickets', 'ticket_sus.id_ticket', '=', 'tickets.id_ticket')->join('estados', 'estados.id_estado', '=', 'ticket_sus.id_estado')->
+                select('ticket_sus.id_ticket', 'tickets.pregunta', 'estados.estado', 'tickets.fecha_hora')->
+                where([
+                    ['ticket_sus.id_SU', '=', Auth::id()]
+                ])->get();
+    }
+    else{
+        $state = "all";
+        $questions = DB::table('ticket_sus')->join('tickets', 'ticket_sus.id_ticket', '=', 'tickets.id_ticket')->join('estados', 'estados.id_estado', '=', 'ticket_sus.id_estado')->
+                select('ticket_sus.id_ticket', 'tickets.pregunta', 'estados.estado', 'tickets.fecha_hora')->
+                where([
+                    ['ticket_sus.id_SU', '=', Auth::id()]
+                ])->get();
     }
     
 ?>
-@extends('layouts.SULayout')
 
-@section('header')
     <style>
         label input[type="radio"] ~ i.fa.fa-circle-o{
             color: #c8c8c8;    display: inline;
@@ -115,7 +162,7 @@
                 @foreach ($questions as $q)
                     <tr>
                     <td><label class="btn active">
-                        {{ Form::radio('ticket', $q->id_ticket, false, ['id'=> $q->id_ticket, 'style'=>'display:none;']) }}<i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i>
+                        {{ Form::radio('ticket', $q->id_ticket, false, ['id'=> 'radio'.$q->id_ticket, 'style'=>'display:none;']) }}<i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i>
                     </label></td>
                     <td>{{ $q->fecha_hora }}</td>
                     <td>{{ $q->estado }}</td>
@@ -140,10 +187,43 @@
                 <img class="img-responsive" src="" alt="no-image" id="imgn">
             </div>
             <div class="panel-footer">
+                <h4>Cambiar detalles del problema</h4>
                 <b>Estado: </b>
-                <p id="estado-actual">Estado Problema</p>
-                <b>Detalles</b>
-                <p id="detalles">Detalles :D</p>
+                <form method="POST" action="/dashboard/tickets/update">
+                    <div class="form-group">
+                        <select id="estado_actual" name="estado_actual" class="form-control">
+                            <option value="Nuevo">Nuevo</option>
+                            <option value="Espera">Espera</option>
+                            <option value="Diferido">Diferido</option>
+                            <option value="Sin resolver">Sin resolver</option>
+                            <option value="Completado">Completado</option>
+                        </select>
+                    </div>
+                    <b>Detalles: </b>
+                    <div class="form-group" >
+                        <textarea name="detalles" id="detalles" class="form-control"></textarea>
+                    </div>
+                    <b>Porcentaje de conclusión</b>
+                    <div class="form-group">
+                        <input id="porcentaje" name="porcentaje" type="number" value="" min="0" max="100" class="form-control"/>
+                    </div>
+                    <b>Prioridad</b>
+                    <div class="form-group">
+                        <select id="prioridad" name="prioridad" class="form-control">
+                            <option value="alto">alto</option>
+                            <option value="medio">medio</option>
+                            <option value="bajo">bajo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                        <input type="hidden" name="ticket_su" id="ticket_su" value="">
+                        <input type="hidden" name="state" id="state" value="">
+                        <input type="submit" class="btn btn-success" value="Guardar"></input>
+                        <a id="foro" href=""><button class="btn btn-info" type="button"> Ir a foro</button></a>
+                        <a id="llamadas" href=""><button class="btn btn-info" type="button"> Ir a llamadas</button></a>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
@@ -206,15 +286,21 @@
                     'ticketid': id
                 },
                 function(data, status){
-                    alert(data);
                     var json = JSON.parse(data);
-                    
                     var message = json.descripcion.replace(/\n/g, "<br />");
                     $('#pregunta-container').show();
                     $('#pregunta').html(json.pregunta);
                     $('#descripcion').html(message);
-                });/*
-                $.post("/ajaxMRTI", {
+                    $('#estado_actual').val(json.estado);
+                    $('#detalles').val(json.detalles);
+                    $('#porcentaje').val(json.porcentaje);
+                    $('#prioridad').val(json.prioridad);
+                    $('#ticket_su').val(json.id_ticketSU);
+                    $('#state').val(json.id_estado);
+                    $('#foro').attr("href", "/dashboard/foro/"+json.id_ticketSU)
+                    $('#llamadas').attr("href", "/dashboard/llamadas/"+json.id_ticketSU)
+                });
+                $.post("/ajaxSRTI", {
                     'ticketid': id
                 },
                 function(data, status){
@@ -228,42 +314,7 @@
                         $('#imgn').attr('alt', 'img');
                     }
                 });
-                 $.post("/ajaxMRTSI", {
-                    'ticketid': id
-                },
-                function(data, status){
-                    var json = JSON.parse(data);
-                    $('#progressbar').attr("style", "width:"+json.porcentaje+"%");
-                    $('#barValue').html(json.porcentaje+"% Resuelto");
-                    if(json.porcentaje<60){
-                        $('#progressbar').attr("class", "progress-bar progress-bar-danger");
-                    }
-                    else if(json.porcentaje<90){
-                        $('#progressbar').attr("class", "progress-bar progress-bar-warning");
-                    }
-                    else if(json.porcentaje<101){
-                        $('#progressbar').attr("class", "progress-bar progress-bar-success");
-                    }
-                    if (typeof json.estado !== 'undefined') {
-                        $('#estado-actual').html(json.estado);
-                    }
-                    else{
-                        $('#estado-actual').html('Sin asignar');
-                    }
-                    if (typeof json.detalles !== 'undefined') {
-                        if(json.detalles="NULL"){
-                            $('#detalles').html("No hay detalles aun");
-                        }
-                        else{
-                            $('#detalles').html(json.detalles);
-                        }
-                    }
-                    else{
-                        $('#detalles').html('Sin detalles');
-                    }
-                });
-                
-            */});
+            });
             
             } );
 

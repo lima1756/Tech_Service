@@ -52,9 +52,25 @@ Route::get('/dashboard/tickets/{state}', function ($state){
     return view('ticketsSU', ['state'=>$state]);
 })->middleware('checkSU');
 
+Route::get('/dashboard/tickets', function (){
+    return view('ticketsSU');
+})->middleware('checkSU');
+
 //ajaxSRT=ajax SU request tickets
 Route::post('/ajaxSRT', 'getTicketDataSU@index')->middleware('checkSU');
 //ajaxSRTI=ajax SU request ticket states
 Route::post('/ajaxSRTI', 'getTicketDataSU@imgs')->middleware('checkSU');
 //ajaxSRTS=ajax SU request ticket states
 Route::post('/ajaxSRTS', 'getTicketDataSU@states')->middleware('checkSU');
+
+Route::post('/dashboard/tickets/update', 'alterTicketSU@index');
+
+Route::get('/dashboard/foro/{id}', function ($id){
+    return view('foro', ['id'=>$id]);
+})->middleware('checkSU');
+
+Route::get('/dashboard/foro', function (){
+    return view('foro');
+})->middleware('checkSU');
+
+Route::post('/dashboard/foro/nuevo', 'newComment@index');
