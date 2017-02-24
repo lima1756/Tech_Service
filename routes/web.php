@@ -74,3 +74,17 @@ Route::get('/dashboard/foro', function (){
 })->middleware('checkSU');
 
 Route::post('/dashboard/foro/nuevo', 'newComment@index');
+
+Route::get('/dashboard/knowledge', function() {
+    return view('knowledgeSU');
+})->middleware('checkSU');
+
+Route::post('/ajaxFAQ', 'getFAQSU@index')->middleware('checkSU');
+
+Route::post('/dashoard/knowledge/submit', 'getFAQSU@submit')->middleware('checkSU');
+
+Route::get('/dashboard/llamadas/{id}', function($id) {
+    return view('llamadas', ['id'=>$id]);
+})->middleware('checkSU');
+
+Route::post('/dashoard/llamadas/{id}/submit', 'llamadas@index')->middleware('checkSU');
