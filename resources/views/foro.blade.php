@@ -66,7 +66,12 @@
                         <form action="nuevo" method="post">
                             <div class="form-group">
                                 <?php
-                                    $last=$foro[count($foro)-1]->id
+                                    if(count($foro)>0){
+                                        $last=$foro[count($foro)-1]->id;
+                                    }
+                                    else{
+                                        $last=null;
+                                    }
                                 ?>
                                 <textarea class="form-control" name="comentario" id="comentario"></textarea>
                                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">

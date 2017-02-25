@@ -1,3 +1,20 @@
+<?php
+    $usuarios = DB::table(DB::raw('(
+                            SELECT supers.* FROM (
+                                SELECT users.* FROM `users` 
+                                LEFT JOIN superusers 
+                                ON id = superusers.id_usuario 
+                                WHERE superusers.id_usuario IS NULL
+                            ) AS supers LEFT JOIN mortals
+                            ON supers.id = mortals.id_usuario 
+                            WHERE mortals.id_usuario IS NULL
+                        ) AS usuarioComun'))->leftJoin('informes', 'usuarioComun.id', '=', 'informes.id_usuario')
+                        ->whereNULL('informes.id_usuario')->get();
+    $count = 0;
+    foreach($usuarios as $u){
+        $count++;
+    }
+?>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -61,7 +78,16 @@
                             <a href="/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="/dashboard/users"><i class="fa fa-user fa-fw"></i> Usuarios</a>
+                            @if($count>0)
+                            <a href="/dashboard/newUsers" class="alert alert-danger"><i class="fa fa-user fa-fw"></i> Peticiones
+                            <span class="pull-right ">
+                            {{$count}}
+                            </span>
+                            </a>
+                            @else
+                            <a href="/dashboard/newUsers"><i class="fa fa-user fa-fw"></i> Peticiones
+                            </a>
+                            @endif
                         </li>
                         <li>
                             <a href="/dashboard/foro"><i class="fa fa-book"></i> Foro</a>

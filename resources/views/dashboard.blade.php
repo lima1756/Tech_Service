@@ -91,6 +91,9 @@
                 </div>
                 <div class="panel-body">
                     <div id="paises"></div>
+                    <div class="text-center">
+                        <a href="/dashboard/countriesStats"><button class="btn btn-info">Ver informacion</button></a>
+                    </div>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -107,7 +110,7 @@
     $paises = DB::table('tickets')->join('users', 'users.id', '=', 'tickets.id_mortal')->join('countries', 'users.id_region', '=', 'countries.id')->
                 select(DB::RAW('count(id_mortal) AS totales'), 'countries.name', 'countries.id')->groupBy('id_mortal')->get();
     $estados = DB::table('estados')->join('ticket_sus', 'estados.id_estado', '=', 'ticket_sus.id_estado')->
-                select(DB::RAW('count(estados.estado) AS conteo'), 'estados.estado')->groupBy('estados.estado')->get();
+                select(DB::RAW('count(estados.estado) AS conteo'), 'estados.estado')->where('id_SU', Auth::id())->groupBy('estados.estado')->get();
     $total = 0;
     foreach($estados as $p):
         if($p->estado == "Completado" || $p->estado == "Sin resolver"):

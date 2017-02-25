@@ -81,10 +81,24 @@ Route::get('/dashboard/knowledge', function() {
 
 Route::post('/ajaxFAQ', 'getFAQSU@index')->middleware('checkSU');
 
-Route::post('/dashoard/knowledge/submit', 'getFAQSU@submit')->middleware('checkSU');
+Route::post('/dashboard/knowledge/submit', 'getFAQSU@submit')->middleware('checkSU');
 
 Route::get('/dashboard/llamadas/{id}', function($id) {
     return view('llamadas', ['id'=>$id]);
 })->middleware('checkSU');
 
-Route::post('/dashoard/llamadas/{id}/submit', 'llamadas@index')->middleware('checkSU');
+Route::post('/dashboard/llamadas/{id}/submit', 'llamadas@index')->middleware('checkSU');
+
+Route::get('/dashboard/newUsers', function() {
+    return view('newUsers');
+})->middleware('checkSU');
+
+Route::get('/dashboard/newUsers/delete/{id}', 'users@delete')->middleware('checkSU');
+
+Route::get('/dashboard/newUsers/user/{id}', 'users@user')->middleware('checkSU');
+
+Route::get('/dashboard/newUsers/SU/{id}', 'users@SU')->middleware('checkSU');
+
+Route::get('/dashboard/countriesStats', function() {
+    return view('countriesStats');
+})->middleware('checkSU');

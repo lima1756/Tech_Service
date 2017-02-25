@@ -74,7 +74,7 @@
     <section id="pregunta-container" class="section-padding" style="display:none;">
         <div class="panel panel-default">
             <div class="panel-body">
-                <form action="/dashoard/knowledge/submit" method="post">
+                <form action="/dashboard/knowledge/submit" method="post">
                     <div class="form-group">
                         <label>Tema:</label>
                         <select id="select_tema" name="select_tema" class="form-control">

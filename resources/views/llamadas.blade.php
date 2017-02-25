@@ -48,7 +48,7 @@
                         </div>
                         <!-- /.panel-body -->
                         <div class="panel-footer">
-                            <form action="/dashoard/llamadas/{{$id}}/submit" method="post">
+                            <form action="/dashboard/llamadas/{{$id}}/submit" method="post">
                                 <div class="form-group">
                                     <textarea id="detalles" name="detalles" type="text" class="form-control" placeholder="Escribe aqui lo que desees guardar de la llamada"></textarea>
                                 </div>
