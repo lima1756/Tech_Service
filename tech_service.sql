@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-02-2017 a las 01:54:12
+-- Tiempo de generación: 02-03-2017 a las 04:21:01
 -- Versión del servidor: 5.7.14
 -- Versión de PHP: 7.0.10
 
@@ -28,7 +28,6 @@ USE `tech_service`;
 -- Estructura de tabla para la tabla `archivos`
 --
 
-DROP TABLE IF EXISTS `archivos`;
 CREATE TABLE `archivos` (
   `id_archivo` int(11) NOT NULL,
   `nombre` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
@@ -44,7 +43,6 @@ CREATE TABLE `archivos` (
 -- Estructura de tabla para la tabla `countries`
 --
 
-DROP TABLE IF EXISTS `countries`;
 CREATE TABLE `countries` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
@@ -318,7 +316,6 @@ INSERT INTO `countries` (`id`, `name`) VALUES
 -- Estructura de tabla para la tabla `estados`
 --
 
-DROP TABLE IF EXISTS `estados`;
 CREATE TABLE `estados` (
   `id_estado` int(11) NOT NULL,
   `fecha_hora` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -331,8 +328,33 @@ CREATE TABLE `estados` (
 --
 
 INSERT INTO `estados` (`id_estado`, `fecha_hora`, `estado`, `detalles`) VALUES
-(1, '2017-02-19 16:12:05', 'Nuevo', NULL),
-(2, '2017-02-19 16:12:05', 'Nuevo', NULL);
+(1, '2017-02-19 16:12:05', 'Completado', 'afdsfasdf\r\nzxcczxc'),
+(2, '2017-02-19 16:12:05', 'Sin resolver', NULL),
+(4, '2017-02-20 18:34:47', 'Nuevo', 'affdsds asdfasf \r\n524242\r\nsadas'),
+(5, '2017-02-21 18:40:38', 'Nuevo', NULL),
+(6, '2017-03-01 21:48:25', 'Nuevo', NULL),
+(7, '2017-03-01 21:49:28', 'Nuevo', NULL),
+(8, '2017-03-01 21:53:34', 'Nuevo', NULL),
+(9, '2017-03-01 21:57:18', 'Nuevo', NULL),
+(10, '2017-03-01 21:57:37', 'Nuevo', NULL),
+(11, '2017-03-01 21:59:40', 'Nuevo', NULL),
+(12, '2017-03-01 21:59:59', 'Nuevo', NULL),
+(13, '2017-03-01 22:03:37', 'Nuevo', NULL),
+(14, '2017-03-01 22:03:55', 'Nuevo', NULL),
+(15, '2017-03-01 22:04:27', 'Nuevo', NULL),
+(16, '2017-03-01 22:05:06', 'Nuevo', NULL),
+(17, '2017-03-01 22:05:37', 'Nuevo', NULL),
+(18, '2017-03-01 22:07:59', 'Nuevo', NULL),
+(19, '2017-03-01 22:08:20', 'Nuevo', NULL),
+(20, '2017-03-01 22:10:09', 'Nuevo', NULL),
+(21, '2017-03-01 22:11:26', 'Nuevo', NULL),
+(22, '2017-03-01 22:11:49', 'Nuevo', NULL),
+(23, '2017-03-01 22:12:36', 'Nuevo', NULL),
+(24, '2017-03-01 22:14:49', 'Nuevo', NULL),
+(25, '2017-03-01 22:15:06', 'Nuevo', NULL),
+(26, '2017-03-01 22:15:40', 'Nuevo', NULL),
+(27, '2017-03-01 22:17:36', 'Nuevo', NULL),
+(28, '2017-03-01 22:18:56', 'Nuevo', NULL);
 
 -- --------------------------------------------------------
 
@@ -340,7 +362,6 @@ INSERT INTO `estados` (`id_estado`, `fecha_hora`, `estado`, `detalles`) VALUES
 -- Estructura de tabla para la tabla `estado_anteriors`
 --
 
-DROP TABLE IF EXISTS `estado_anteriors`;
 CREATE TABLE `estado_anteriors` (
   `id_estado_ant` int(11) NOT NULL,
   `id_estado` int(11) NOT NULL,
@@ -353,7 +374,6 @@ CREATE TABLE `estado_anteriors` (
 -- Estructura de tabla para la tabla `imgs_knowledge`
 --
 
-DROP TABLE IF EXISTS `imgs_knowledge`;
 CREATE TABLE `imgs_knowledge` (
   `id` int(11) NOT NULL,
   `id_knowledge` int(11) NOT NULL,
@@ -367,7 +387,6 @@ CREATE TABLE `imgs_knowledge` (
 -- Estructura de tabla para la tabla `imgs_tickets`
 --
 
-DROP TABLE IF EXISTS `imgs_tickets`;
 CREATE TABLE `imgs_tickets` (
   `id_img` int(11) NOT NULL,
   `id_ticket` int(11) NOT NULL,
@@ -384,7 +403,12 @@ INSERT INTO `imgs_tickets` (`id_img`, `id_ticket`, `nombre`, `extension`) VALUES
 (4, 8, 'bu9dPmlREFGSRnu9CJ5cmXUdjWBaf5xov1Ra8UeE.jpeg', 'jpeg'),
 (5, 9, 'QHMNf40HVQaTSC4cUOQbAXNguHpC6nbIYVqNjUkX.jpeg', 'jpeg'),
 (6, 10, 'Y3emDD2SB82wkQOC3wuETqpZmBEFsbdpKGDEohtS.jpeg', 'jpeg'),
-(7, 17, 'B8DBJ5a0RUqpsYr4iWJbNjLyE9yrTY7R2JIWBkvd.jpeg', 'jpeg');
+(7, 17, 'B8DBJ5a0RUqpsYr4iWJbNjLyE9yrTY7R2JIWBkvd.jpeg', 'jpeg'),
+(8, 30, 'O8rlxIHkcI5XUnyMVEv0t7kqxMfiBmoNazfaG965.jpeg', 'jpeg'),
+(9, 31, '5kLQJYuy5ySW9C0ZBFkThNTymhkVMJf1aBrEd2ru.jpeg', 'jpeg'),
+(10, 32, '6rcvl4ggW3KSjORn2yY26oDNHLWR6o6kN9od9rLL.jpeg', 'jpeg'),
+(11, 33, 'alwkVCpTVFwn0dXCx14neogPOu4NfyrRnwkmmQk9.jpeg', 'jpeg'),
+(12, 34, '2IXBVtDrTJPcnpaCPfSm4iKGo5nOrTsb3bgi821c.jpeg', 'jpeg');
 
 -- --------------------------------------------------------
 
@@ -392,17 +416,9 @@ INSERT INTO `imgs_tickets` (`id_img`, `id_ticket`, `nombre`, `extension`) VALUES
 -- Estructura de tabla para la tabla `informes`
 --
 
-DROP TABLE IF EXISTS `informes`;
 CREATE TABLE `informes` (
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `informes`
---
-
-INSERT INTO `informes` (`id_usuario`) VALUES
-(5200);
 
 -- --------------------------------------------------------
 
@@ -410,7 +426,6 @@ INSERT INTO `informes` (`id_usuario`) VALUES
 -- Estructura de tabla para la tabla `knowledge`
 --
 
-DROP TABLE IF EXISTS `knowledge`;
 CREATE TABLE `knowledge` (
   `id` int(11) NOT NULL,
   `pregunta` text COLLATE utf8_unicode_ci NOT NULL,
@@ -424,8 +439,8 @@ CREATE TABLE `knowledge` (
 --
 
 INSERT INTO `knowledge` (`id`, `pregunta`, `respuesta`, `id_superuser`, `tema`) VALUES
-(1, '¿Puedo eliminar System32?', 'No, no lo haga, son archivos escenciales del sistema', 5504, 'Sistema'),
-(2, '¿Me pide actualizar lo hago?', 'Si es una alerta del sistema y estas seguro que es el sistema entonces si. En caso de duda porfavor genere un ticket.', 5504, 'Sistema');
+(1, '¿Puedo eliminar System32?', 'No, no lo haga, son archivos escenciales del sistema.', 5504, 'Sistema'),
+(2, '¿Me pide actualizar lo hago?', 'Si y solo si es una alerta del sistema y esta seguro que lo es, en caso contrario genere un ticket.', 5504, 'Sistema');
 
 -- --------------------------------------------------------
 
@@ -433,7 +448,6 @@ INSERT INTO `knowledge` (`id`, `pregunta`, `respuesta`, `id_superuser`, `tema`) 
 -- Estructura de tabla para la tabla `llamadas`
 --
 
-DROP TABLE IF EXISTS `llamadas`;
 CREATE TABLE `llamadas` (
   `id_llamada` int(11) NOT NULL,
   `fecha_hora` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -441,13 +455,31 @@ CREATE TABLE `llamadas` (
   `detalles` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `llamadas`
+--
+
+INSERT INTO `llamadas` (`id_llamada`, `fecha_hora`, `id_ticket_su`, `detalles`) VALUES
+(1, '2017-02-23 18:44:56', 9, 'hsdgfsdg'),
+(2, '2017-02-23 18:47:04', 9, 'hsdgfsdg\n\rsdfsafadfsdf'),
+(3, '2017-02-23 18:54:53', 9, 'asdasdas'),
+(4, '2017-02-23 18:54:55', 9, 'asdasdasdas'),
+(5, '2017-02-23 18:54:57', 9, 'asdasdasd'),
+(6, '2017-02-23 18:54:59', 9, 'asdasdasd'),
+(7, '2017-02-23 18:55:01', 9, 'asdasdas'),
+(8, '2017-02-23 18:55:03', 9, 'asdasdas'),
+(9, '2017-02-23 18:55:19', 9, 'asdsdsa'),
+(10, '2017-02-24 19:34:17', 13, 'fasdfads'),
+(11, '2017-02-24 19:34:19', 13, 'asdfasdf'),
+(12, '2017-02-24 19:34:20', 13, 'asdfadsf'),
+(13, '2017-02-24 19:34:22', 13, 'sadfasdf');
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `mortals`
 --
 
-DROP TABLE IF EXISTS `mortals`;
 CREATE TABLE `mortals` (
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -457,6 +489,8 @@ CREATE TABLE `mortals` (
 --
 
 INSERT INTO `mortals` (`id_usuario`) VALUES
+(5200),
+(5503),
 (5505);
 
 -- --------------------------------------------------------
@@ -465,15 +499,26 @@ INSERT INTO `mortals` (`id_usuario`) VALUES
 -- Estructura de tabla para la tabla `notas`
 --
 
-DROP TABLE IF EXISTS `notas`;
 CREATE TABLE `notas` (
   `id` int(11) NOT NULL,
-  `fecha_hora` int(11) NOT NULL,
+  `fecha_hora` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_ticket_su` int(11) NOT NULL,
   `id_SU` int(11) NOT NULL,
   `mensaje` text COLLATE utf8_unicode_ci NOT NULL,
   `id_nota` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `notas`
+--
+
+INSERT INTO `notas` (`id`, `fecha_hora`, `id_ticket_su`, `id_SU`, `mensaje`, `id_nota`) VALUES
+(1, '2017-02-22 18:36:40', 9, 5504, '4536456456546', NULL),
+(2, '2017-02-22 18:36:54', 9, 5504, '546345245', 1),
+(3, '2017-02-22 18:57:49', 9, 5504, 'fghdhdf', 2),
+(4, '2017-02-22 19:49:48', 9, 5504, 'asdasdasd', 3),
+(5, '2017-02-22 19:57:07', 9, 5504, 'Este comentario es serio :3', 4),
+(6, '2017-02-24 19:34:01', 13, 5504, 'asdasdasd', NULL);
 
 -- --------------------------------------------------------
 
@@ -481,7 +526,6 @@ CREATE TABLE `notas` (
 -- Estructura de tabla para la tabla `superusers`
 --
 
-DROP TABLE IF EXISTS `superusers`;
 CREATE TABLE `superusers` (
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -491,7 +535,6 @@ CREATE TABLE `superusers` (
 --
 
 INSERT INTO `superusers` (`id_usuario`) VALUES
-(5500),
 (5504);
 
 -- --------------------------------------------------------
@@ -500,7 +543,6 @@ INSERT INTO `superusers` (`id_usuario`) VALUES
 -- Estructura de tabla para la tabla `tickets`
 --
 
-DROP TABLE IF EXISTS `tickets`;
 CREATE TABLE `tickets` (
   `id_ticket` int(11) NOT NULL,
   `id_mortal` int(11) NOT NULL,
@@ -514,7 +556,32 @@ CREATE TABLE `tickets` (
 --
 
 INSERT INTO `tickets` (`id_ticket`, `id_mortal`, `fecha_hora`, `pregunta`, `descripcion`) VALUES
-(17, 5505, '2017-02-19 17:00:34', 'Mi preguntita', 'Una descripcion');
+(17, 5505, '2017-02-19 17:00:34', 'Mi preguntita', 'Una descripcion'),
+(28, 5505, '2017-02-20 18:34:47', '123456798', '987654321'),
+(29, 5505, '2017-02-21 18:40:38', 'asdfadfasdfasdfadsf', 'asdf\r\nasdf\r\nasdf\r\nasdf'),
+(30, 5505, '2017-03-01 21:48:25', 'dsafsfdfasdfasd', 'czxvzvzxcvzxc'),
+(31, 5505, '2017-03-01 21:49:28', 'dsafsfdfasdfasd', 'czxvzvzxcvzxc'),
+(32, 5505, '2017-03-01 21:53:34', 'dsafsfdfasdfasd', 'czxvzvzxcvzxc'),
+(33, 5505, '2017-03-01 21:57:18', 'dsafsfdfasdfasd', 'czxvzvzxcvzxc'),
+(34, 5505, '2017-03-01 21:57:37', 'dsafsfdfasdfasd', 'czxvzvzxcvzxc'),
+(35, 5505, '2017-03-01 21:59:40', 'vvffsvf', 'sfsdgsdg'),
+(36, 5505, '2017-03-01 21:59:59', 'vvffsvf', 'sfsdgsdg'),
+(37, 5505, '2017-03-01 22:03:37', 'vzcxvxcvzxc', 'asdfafs'),
+(38, 5505, '2017-03-01 22:03:55', 'mmmmmmmmmmm', 'mmnmn'),
+(39, 5505, '2017-03-01 22:04:27', 'mmmmmnnnnnnnnnnn', 'mmmmmmmm'),
+(40, 5505, '2017-03-01 22:05:06', '1111111', '1111111111111111111'),
+(41, 5505, '2017-03-01 22:05:37', '2121', '12121'),
+(42, 5505, '2017-03-01 22:07:59', 'czxczxczx', 'zvzxczx'),
+(43, 5505, '2017-03-01 22:08:19', 'bxcvbxcvb', 'cvxbcxv'),
+(44, 5505, '2017-03-01 22:10:09', 'zxcvzxc', 'vzxcvxzcv'),
+(45, 5505, '2017-03-01 22:11:26', 'zxcvzxcv', 'zxcvzxcv'),
+(46, 5505, '2017-03-01 22:11:49', 'czxcvxzc', 'cxzvx'),
+(47, 5505, '2017-03-01 22:12:36', 'bncnb', 'bncxn'),
+(48, 5505, '2017-03-01 22:14:49', 'xcvbxcv', 'bxcvbxcvb'),
+(49, 5505, '2017-03-01 22:15:06', 'cvnc', 'vcncvnvbn'),
+(50, 5505, '2017-03-01 22:15:40', 'vxcbc', 'vbxcvbv'),
+(51, 5505, '2017-03-01 22:17:36', 'zxcvzxcvzxcv', 'zxcvxzcv'),
+(52, 5505, '2017-03-01 22:18:56', 'zxcvzxcvxcz', 'zxcvzxcv');
 
 -- --------------------------------------------------------
 
@@ -522,7 +589,6 @@ INSERT INTO `tickets` (`id_ticket`, `id_mortal`, `fecha_hora`, `pregunta`, `desc
 -- Estructura de tabla para la tabla `ticket_sus`
 --
 
-DROP TABLE IF EXISTS `ticket_sus`;
 CREATE TABLE `ticket_sus` (
   `id_ticketSU` int(11) NOT NULL,
   `id_SU` int(11) NOT NULL,
@@ -538,7 +604,32 @@ CREATE TABLE `ticket_sus` (
 --
 
 INSERT INTO `ticket_sus` (`id_ticketSU`, `id_SU`, `id_ticket`, `fecha_hora`, `porcentaje`, `id_estado`, `prioridad`) VALUES
-(9, 5504, 17, '2017-02-19 17:00:34', 65, NULL, NULL);
+(9, 5504, 17, '2017-02-22 20:32:24', 5, 1, 'medio'),
+(13, 5504, 28, '2017-02-22 20:36:06', 0, 4, 'alto'),
+(14, 5500, 29, '2017-02-21 18:40:38', 0, 5, NULL),
+(15, 5504, 30, '2017-03-01 21:48:25', 0, 6, NULL),
+(16, 5504, 31, '2017-03-01 21:49:28', 0, 7, NULL),
+(17, 5504, 32, '2017-03-01 21:53:34', 0, 8, NULL),
+(18, 5504, 33, '2017-03-01 21:57:18', 0, 9, NULL),
+(19, 5504, 34, '2017-03-01 21:57:37', 0, 10, NULL),
+(20, 5504, 35, '2017-03-01 21:59:40', 0, 11, NULL),
+(21, 5504, 36, '2017-03-01 21:59:59', 0, 12, NULL),
+(22, 5504, 37, '2017-03-01 22:03:37', 0, 13, NULL),
+(23, 5504, 38, '2017-03-01 22:03:55', 0, 14, NULL),
+(24, 5504, 39, '2017-03-01 22:04:27', 0, 15, NULL),
+(25, 5504, 40, '2017-03-01 22:05:06', 0, 16, NULL),
+(26, 5504, 41, '2017-03-01 22:05:37', 0, 17, NULL),
+(27, 5504, 42, '2017-03-01 22:07:59', 0, 18, NULL),
+(28, 5504, 43, '2017-03-01 22:08:20', 0, 19, NULL),
+(29, 5504, 44, '2017-03-01 22:10:09', 0, 20, NULL),
+(30, 5504, 45, '2017-03-01 22:11:26', 0, 21, NULL),
+(31, 5504, 46, '2017-03-01 22:11:49', 0, 22, NULL),
+(32, 5504, 47, '2017-03-01 22:12:36', 0, 23, NULL),
+(33, 5504, 48, '2017-03-01 22:14:49', 0, 24, NULL),
+(34, 5504, 49, '2017-03-01 22:15:06', 0, 25, NULL),
+(35, 5504, 50, '2017-03-01 22:15:40', 0, 26, NULL),
+(36, 5504, 51, '2017-03-01 22:17:36', 0, 27, NULL),
+(37, 5504, 52, '2017-03-01 22:18:56', 0, 28, NULL);
 
 -- --------------------------------------------------------
 
@@ -546,7 +637,6 @@ INSERT INTO `ticket_sus` (`id_ticketSU`, `id_SU`, `id_ticket`, `fecha_hora`, `po
 -- Estructura de tabla para la tabla `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
@@ -569,10 +659,10 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `email`, `password`, `nombre`, `apellido`, `cel`, `tel`, `ext`, `areaTrabajo`, `trabajo`, `id_region`, `remember_token`) VALUES
 (5200, 'asdasd@asd.com', 'asdf', 'asdf', 'sadf', 'ads', 'asdf', 'asd', 'asf', 'asdf', 55, NULL),
 (5500, '1@1.com', '123', '123', '123', '123', '123', '123', '123', '123', 123, NULL),
-(5501, 'luisivanmorett@gmail.com', '123456789', 'Luis Iván', 'Morett Arévalo', '3311516589', '38254926', '123', 'una area', 'la empresa', 16, NULL),
-(5503, 'luisivanmorett@hotmail.com', '123123123', '654987', '789456', '123000', '00000', '99999', '9999', '6666', 1, NULL),
-(5504, 'l@l.com', '$2y$10$KZhWELgALLT9P7LyC/Mvwea5FnKJf4Ef733QDXJFDVpjMAtop8.oS', '123', '123', '123123', '123123', '12', '123123', '123123', 17, 'wXmT1LEsjifjWfyyWpeUHWD4bWaGBSk79MA1loThc7novGYBlu8EppeZLhm6'),
-(5505, 'i@i.com', '$2y$10$5TASH5o6wlg6bW48gqRBQO4.N0dixHHVYyDizCMzH.Ghnp9WshdcW', '231231123', '123123123', '123123123', '123123123', '123', '123123123', '123123123', 75, 'T7mTrTWEEEIeF8Y1bvmqPo9x1AlYYtnUvmolvohqmiYAtrBfFv3HsII8gEoM');
+(5501, 'a@gmail.com', '123456789', 'Luis Iván', 'Morett Arévalo', '3311516589', '38254926', '123', 'una area', 'la empresa', 75, NULL),
+(5503, 'l@l.com', '123123123', '654987', '789456', '123000', '00000', '99999', '9999', '6666', 1, NULL),
+(5504, 'luisivanmorett@hotmail.com', '$2y$10$KZhWELgALLT9P7LyC/Mvwea5FnKJf4Ef733QDXJFDVpjMAtop8.oS', '123', '123', '123123', '123123', '12', '123123', '123123', 17, '2vZBawdXdDoIEs2ZJfEstoCKeEK0JP4J6JikxwgN0Wc0XA2giim4YscScP6E'),
+(5505, 'luisivanmorett@gmail.com', '$2y$10$5TASH5o6wlg6bW48gqRBQO4.N0dixHHVYyDizCMzH.Ghnp9WshdcW', '231231123', '123123123', '123123123', '123123123', '123', '123123123', '123123123', 75, 'i907XBXEG4ojyPsnDGWyKBWw9hcacvpFol7Z5rMxBx8Kpu2zLZjz6tW8etVd');
 
 --
 -- Índices para tablas volcadas
@@ -622,6 +712,7 @@ ALTER TABLE `imgs_tickets`
 -- Indices de la tabla `informes`
 --
 ALTER TABLE `informes`
+  ADD PRIMARY KEY (`id_usuario`),
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
@@ -642,6 +733,7 @@ ALTER TABLE `llamadas`
 -- Indices de la tabla `mortals`
 --
 ALTER TABLE `mortals`
+  ADD PRIMARY KEY (`id_usuario`),
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
@@ -699,7 +791,7 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT de la tabla `estados`
 --
 ALTER TABLE `estados`
-  MODIFY `id_estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT de la tabla `estado_anteriors`
 --
@@ -709,7 +801,7 @@ ALTER TABLE `estado_anteriors`
 -- AUTO_INCREMENT de la tabla `imgs_tickets`
 --
 ALTER TABLE `imgs_tickets`
-  MODIFY `id_img` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_img` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `knowledge`
 --
@@ -719,22 +811,22 @@ ALTER TABLE `knowledge`
 -- AUTO_INCREMENT de la tabla `llamadas`
 --
 ALTER TABLE `llamadas`
-  MODIFY `id_llamada` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_llamada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id_ticket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_ticket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 --
 -- AUTO_INCREMENT de la tabla `ticket_sus`
 --
 ALTER TABLE `ticket_sus`
-  MODIFY `id_ticketSU` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_ticketSU` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
