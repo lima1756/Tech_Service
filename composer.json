@@ -50,5 +50,5 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "guzzlehttp/guzzle": "~5.3|~6.0"
+    "guzzlehttp/guzzle": "~4.0"
 }

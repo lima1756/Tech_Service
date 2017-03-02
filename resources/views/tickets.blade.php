@@ -1,5 +1,82 @@
+ <?php
+if(isset($state))
+if(is_numeric($state))
+    {
+        echo("<script>
+                window.onload = function() {
+                    $('#radio".$state."').prop(\"checked\", true);
+                    $.ajaxSetup({
+                        headers: {
+                                'X-CSRF-TOKEN': '".csrf_token()."'
+                            }
+                        })
+                $.post(\"/ajaxMRT\", {
+                    'ticketid': ".$state."
+                },
+                function(data, status){
+                    var json = JSON.parse(data);
+                    var message = json.descripcion.replace(/\\n/g, \"<br />\");
+                    $('#pregunta-container').show();
+                    $('#pregunta').html(json.pregunta);
+                    $('#descripcion').html(message);
+                });
+                $.post(\"/ajaxMRTI\", {
+                    'ticketid': ".$state."
+                },
+                function(data, status){
+                    if(data==\"-1\"){
+                        $('#imgn').attr(\"src\", \"\")
+                        $('#imgn').attr('alt', 'No se subió ninguna imagen');
+                    }
+                    else{
+                        var json = JSON.parse(data);
+                        $('#imgn').attr(\"src\", \"/storage/ticketImages/\" + json.nombre)
+                        $('#imgn').attr('alt', 'img');
+                    }
+                });
+                 $.post(\"/ajaxMRTSI\", {
+                    'ticketid': ".$state."
+                },
+                function(data, status){
+                    var json = JSON.parse(data);
+                    $('#progressbar').attr(\"style\", \"width:\"+json.porcentaje+\"%\");
+                    $('#barValue').html(json.porcentaje+\"% Resuelto\");
+                    if(json.porcentaje<60){
+                        $('#progressbar').attr(\"class\", \"progress-bar progress-bar-danger\");
+                    }
+                    else if(json.porcentaje<90){
+                        $('#progressbar').attr(\"class\", \"progress-bar progress-bar-warning\");
+                    }
+                    else if(json.porcentaje<101){
+                        $('#progressbar').attr(\"class\", \"progress-bar progress-bar-success\");
+                    }
+                    if (typeof json.estado !== 'undefined') {
+                        $('#estado-actual').html(json.estado);
+                    }
+                    else{
+                        $('#estado-actual').html('Sin asignar');
+                    }
+                    if (typeof json.detalles !== 'undefined') {
+                        if(json.detalles=\"NULL\"){
+                            $('#detalles').html(\"No hay detalles aun\");
+                        }
+                        else{
+                            $('#detalles').html(json.detalles);
+                        }
+                    }
+                    else{
+                        $('#detalles').html('Sin detalles');
+                    }
+                });
+                }
+
+        
+            </script>");
+    }
+?>
 @extends('layouts.mortalLayout')
     @section('feature')
+   
         <!--Feature-->
         <section id ="feature" class="section-padding">
         <?php

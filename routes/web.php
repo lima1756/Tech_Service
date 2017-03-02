@@ -34,6 +34,10 @@ Route::get('/tickets', function() {
     return view('tickets');
 })->middleware('checkMortal');
 
+Route::get('/tickets/{state}', function($state) {
+    return view('tickets', ['state'=>$state]);
+})->middleware('checkMortal');
+
 //ajaxMRT=ajax mortal request tickets
 Route::post('/ajaxMRT', 'getUserTickets@index')->middleware('checkMortal');
 //ajaxMRTI=ajax mortal request tickets Image
@@ -102,3 +106,7 @@ Route::get('/dashboard/newUsers/SU/{id}', 'users@SU')->middleware('checkSU');
 Route::get('/dashboard/countriesStats', function() {
     return view('countriesStats');
 })->middleware('checkSU');
+
+Route::get('/mail', function() {
+    return view('mail');
+});
