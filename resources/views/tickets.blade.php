@@ -92,7 +92,7 @@ if(is_numeric($state))
                 </div>
                 @endif
                 <div class="col-med-12">
-                    <a href="#newTicket-Container"><button class="btn btn-info btn-lg btn-block" id="btn_newTicket">Crear nuevo ticket</button></a>
+                    <a href="#newTicket-Container"><button class="btn btn-warning btn-lg btn-block" id="btn_newTicket">Crear nuevo ticket</button></a>
                 </div>
             </div>
         </div>

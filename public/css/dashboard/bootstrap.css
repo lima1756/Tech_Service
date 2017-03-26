@@ -6755,3 +6755,13 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+.noSpace
+{
+  font-family: 'Dosis', sans-serif !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+    height: inherit;
+    font-size: 50px;
+    letter-spacing: -6px;
+}

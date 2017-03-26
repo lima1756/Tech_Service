@@ -313,7 +313,7 @@ a {
 								</tr>
 								<tr style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;">
 									<td class="content-block" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;vertical-align: top;padding: 0 0 20px;">
-										<a href="localhost:8008/dashboard/tickets/{{$id_ticket}}" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;color: #348eda;text-decoration: underline;">Ir a ticket (si no funciona copiar este enlace: localhost:8008/dashboard/tickets/{{$id_ticket}}) </a>
+										<a href="localhost:8008/dashboard/tickets/{{$id_ticket}}" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;color: #348eda;text-decoration: underline;">Ir a ticket (si no funciona copiar este enlace: techservice.dev/dashboard/tickets/{{$id_ticket}}) </a>
 									</td>
 								</tr>
 							</table>
@@ -323,7 +323,7 @@ a {
 				<div class="footer" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;width: 100%;clear: both;color: #999;padding: 20px;">
 					<table width="100%" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;">
 						<tr style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;">
-							<td class="aligncenter content-block" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 12px;vertical-align: top;padding: 0 0 20px;text-align: center;color: #999;">Tech-Service. Todos los derechos reservados</td>
+							<td class="aligncenter content-block" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 12px;vertical-align: top;padding: 0 0 20px;text-align: center;color: #999;">IHG. Todos los derechos reservados</td>
 						</tr>
 					</table>
 				</div>

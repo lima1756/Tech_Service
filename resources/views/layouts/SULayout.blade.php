@@ -20,11 +20,10 @@
     <head>
         <title>@yield('title')</title>
         
-        {{ HTML::style('css/dashboard/bootstrap.min.css') }}
+        {{ HTML::style('css/dashboard/bootstrap.css') }}
         {{ HTML::style('css/dashboard/font-awesome.min.css') }}
         {{ HTML::style('css/dashboard/metisMenu.min.css') }}
         {{ HTML::style('css/dashboard/sb-admin-2.css') }}
-        {{ HTML::style('css/dashboard/morris.css') }}
 
         {{ HTML::script('js/dashboard/jquery.min.js') }}
         {{ HTML::script('js/dashboard/bootstrap.min.js') }}
@@ -32,7 +31,8 @@
         {{ HTML::script('js/dashboard/raphael.min.js') }}
         {{ HTML::script('js/dashboard/morris.min.js') }}
         {{ HTML::script('js/dashboard/sb-admin-2.js') }}
-
+   {{ HTML::script('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js') }}
+        {{ HTML::script('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js') }}
         @section('header')
         @show
     </head>
@@ -48,7 +48,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Tech-Service</a>
+                <a class="navbar-brand noSpace" href="/dashboard"><span style="color: #D71820">I</span><span style="color: #E05F25">H</span><span style="color: #DC771B">G</span></p></a>
             </div>
             <!-- /.navbar-header -->
 

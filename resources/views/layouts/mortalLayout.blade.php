@@ -12,6 +12,8 @@
         {{ HTML::script('js/jquery.easing.min.js') }}
         {{ HTML::script('js/bootstrap.min.js') }}
         {{ HTML::script('js/custom.js') }}
+     
+        
         <style>
             label input[type="radio"] ~ i.fa.fa-circle-o{
                 color: #c8c8c8;    display: inline;
@@ -42,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Tech<span>-service</span></a>
+            <a class="navbar-brand noSpace" href="/"><span style="color: #D71820">I</span><span style="color: #E05F25">H</span><span style="color: #DC771B">G</span></a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">

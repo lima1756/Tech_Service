@@ -1,3 +1,123 @@
+<?php
+    $paises = DB::table('tickets')->join('users', 'users.id', '=', 'tickets.id_mortal')->join('countries', 'users.id_region', '=', 'countries.id')->
+                select(DB::RAW('count(id_mortal) AS totales'), 'countries.name', 'countries.id')->groupBy('id_mortal')->get();
+    $estados = DB::table('estados')->join('ticket_sus', 'estados.id_estado', '=', 'ticket_sus.id_estado')->
+                select(DB::RAW('count(estados.estado) AS conteo'), 'estados.estado')->where('id_SU', Auth::id())->groupBy('estados.estado')->get();
+    $total = 0;
+    foreach($estados as $p):
+        if($p->estado == "Completado" || $p->estado == "Sin resolver"):
+            $total+=$p->conteo;
+        endif;
+    endforeach;
+    $count = array();
+    foreach($paises as $pais){
+        if(isset($count[$pais->id])){
+            $count[$pais->id][0]+=$pais->totales;
+        }
+        else{
+            $count[$pais->id]=[0, $pais->name];
+            $count[$pais->id][0]+=$pais->totales;
+        }
+    }
+    $misPaises = array();
+    $misConteos = array();
+    $misColores = array();
+    $misColores2 = array();
+    foreach($count as $c):
+        array_push($misPaises, $c[1]);
+        array_push($misConteos, $c[0]);
+        $uno = rand(1,255);
+        $dos = rand(1,255);
+        $tres = rand(1,255);
+        array_push($misColores, 'rgba('.$uno.', '.$dos.', '.$tres.', 0.5)');
+        array_push($misColores2, 'rgba('.$uno.', '.$dos.', '.$tres.', 1)');
+    endforeach;
+    $conteos = array();   
+    foreach($estados as $p)
+    {
+            $conteos[$p->estado] = $p->conteo;
+    }
+    if(!isset($conteos['Nuevo']))
+    {
+        $conteos['Nuevo']=0;
+    }
+    if(!isset($conteos['Espera']))
+    {
+        $conteos['Espera']=0;
+    }
+    if(!isset($conteos['Diferido']))
+    {
+        $conteos['Diferido']=0;
+    }
+    if(!isset($conteos['Completado']))
+    {
+        $conteos['Completado']=0;
+    }
+    if(!isset($conteos['Sin resolver']))
+    {
+        $conteos['Sin resolver']=0;
+    }
+    $estadoSolicitudes = app()->chartjs
+                                ->name('estadoSolicitudes')
+                                ->type('pie')
+                                ->labels(['Espera', 'Nuevos', 'Diferidos'])
+                                ->datasets([
+                                    [
+                                        'backgroundColor' => ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(54, 162, 150, 0.5)'],
+                                        'hoverBackgroundColor' => ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 150, 1)'],
+                                        'data' => [$conteos['Espera'], $conteos['Nuevo'], $conteos['Diferido']]
+                                    ]
+                                ])
+                                ->options([]);
+    $graficaPaises = app()->chartjs
+                            ->name('paisesGraph')
+                            ->type('pie')
+                            ->labels($misPaises)
+                            ->datasets([
+                                [
+                                    'backgroundColor' => $misColores,
+                                    'hoverBackgroundColor' => $misColores2,
+                                    'data' => $misConteos
+                                ]
+                            ])
+                            ->options([]);
+
+    $solicitudes = app()->chartjs
+                                    ->name('Solicitudes')
+                                    ->type('bar')
+                                    ->labels(['Solicitudes'])
+                                    ->datasets([
+                                        [
+                                            "label" => "Completados",
+                                            'backgroundColor' => ['rgba(255, 99, 132, 0.5)'],
+                                            'data' => [$conteos['Completado']]
+                                        ],
+                                        [
+                                            "label" => "Sin Resolver",
+                                            'backgroundColor' => ['rgba(54, 162, 235, 0.5)'],
+                                            'data' => [$conteos['Sin resolver']]
+                                        ],
+                                        [
+                                            "label" => "Total",
+                                            'backgroundColor' => ['rgba(54, 162, 150, 0.5)'],
+                                            'data' => [ $total]
+                                        ]
+                                    ])
+                                    ->options([
+                                        'scales'=> [
+                                            'yAxes'=> [[
+                                                'ticks'=> [
+                                                    'beginAtZero'=>'true'
+                                                ]
+                                            ]]
+                                        ]
+
+
+                                    ]);
+
+
+?>
+
 @extends('layouts.SULayout')
 @section('content')
     <div class="row">
@@ -15,7 +135,14 @@
                     <i class="fa fa-pie-chart fa-fw"></i> Estado de solicitudes
                 </div>
                 <div class="panel-body">
-                    <div id="estado-solicitud"></div>
+                    <div id="estado-solicitud">
+                    <?php
+                        echo $estadoSolicitudes->render();
+                    ?>
+
+      
+                    
+                    </div>
                     <div class="text-center">
                             <a href="/dashboard/tickets/Espera"><button class="btn btn-info">Ver en espera</button></a>
                             <a href="/dashboard/tickets/Nuevo"><button class="btn btn-info">Ver nuevos</button></a>
@@ -34,7 +161,11 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                        <div id="solicitudes"></div>
+                        <div id="solicitudes">
+                            <?php echo $solicitudes->render();
+                            
+                        ?>
+                        </div>
                         <div class="text-center">
                             <a href="/dashboard/tickets/Completado"><button class="btn btn-info">Ver Completadas</button></a>
                             <a href="/dashboard/tickets/Sin_resolver"><button class="btn btn-info">Ver Sin resolver</button></a>
@@ -90,7 +221,11 @@
                     <i class="fa fa-pie-chart fa-fw"></i> Solicitudes por paises
                 </div>
                 <div class="panel-body">
-                    <div id="paises"></div>
+                    <div id="paises">
+                        <?php
+                            echo $graficaPaises->render();
+                        ?>
+                    </div>
                     <div class="text-center">
                         <a href="/dashboard/countriesStats"><button class="btn btn-info">Ver informacion</button></a>
                     </div>
@@ -106,63 +241,11 @@
 @endsection
 
 @section('footer')
-<?php
-    $paises = DB::table('tickets')->join('users', 'users.id', '=', 'tickets.id_mortal')->join('countries', 'users.id_region', '=', 'countries.id')->
-                select(DB::RAW('count(id_mortal) AS totales'), 'countries.name', 'countries.id')->groupBy('id_mortal')->get();
-    $estados = DB::table('estados')->join('ticket_sus', 'estados.id_estado', '=', 'ticket_sus.id_estado')->
-                select(DB::RAW('count(estados.estado) AS conteo'), 'estados.estado')->where('id_SU', Auth::id())->groupBy('estados.estado')->get();
-    $total = 0;
-    foreach($estados as $p):
-        if($p->estado == "Completado" || $p->estado == "Sin resolver"):
-            $total+=$p->conteo;
-        endif;
-    endforeach;
-    $count = array();
-    foreach($paises as $pais){
-        if(isset($count[$pais->id])){
-            $count[$pais->id][0]+=$pais->totales;
-        }
-        else{
-            $count[$pais->id]=[0, $pais->name];
-            $count[$pais->id][0]+=$pais->totales;
-        }
-    }
-?>
+
 <script>
-Morris.Donut({
-  element: 'paises',
-  data: [
-    @foreach($count as $c)
-        {label: '{{$c[1]}}', value: {{$c[0]}}},
-    @endforeach
-  ]
-});
-Morris.Donut({
-  element: 'estado-solicitud',
-  data: [
-    @foreach($estados as $p)
-        @if($p->estado == "Nuevo" || $p->estado == "Espera" || $p->estado == "Diferido")
-            {label: '{{$p->estado}}', value: {{$p->conteo}}},
-        @endif
-    @endforeach
-  ]
-});
 
-Morris.Bar({
-  element: 'solicitudes',
-    data: [
-        @foreach($estados as $p)
-            @if($p->estado == "Completado" || $p->estado == "Sin resolver")
-                {x: '{{$p->estado}}', y: {{$p->conteo}}},
-            @endif
-        @endforeach
-        {x: 'Total', y: {{$total}}}
 
-  ],
-  xkey: 'x',
-  ykeys: 'y',
-  labels: 'Graficas'
-});
 </script>
 
 @endsection
+

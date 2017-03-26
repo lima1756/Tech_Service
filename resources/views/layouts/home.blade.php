@@ -27,7 +27,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Tech<span>-service</span></a>
+            <a class="navbar-brand noSpace" href="/"><span style="color: #D71820">I</span><span style="color: #E05F25">H</span><span style="color: #DC771B">G</span></p></a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
@@ -45,12 +45,12 @@
             <div class="container">
             <div class="row">
                 <div class="banner-text text-center">
-                <div class="text-border">
-                    <h2 class="text-dec">Velocidad & Confianza</h2>
-                </div>
+                
+                    <img class="logo text-border" src="img/IHG-logo.png"/>
+                
                 <div class="intro-para text-center quote">
-                    <p class="big-text"><b>Tech</b>-Service</p>
-                    <p class="small-text">Tu parte de soporte para la "Empresa" <br>(El Psy-Congroo)</p>
+                    <p class="big-text"><b>Servicio tecnico</b></p>
+                    <p class="small-text">En IHG evolucionamos continuamente, abrazando las ultimas tecnologias para simplificar las tareas diarias y permitir a nuestros colegas trabajar con mayor eficiencia</p>
                 </div>
                 <a href="#feature" class="mouse-hover"><div class="mouse"></div></a>
                 </div>

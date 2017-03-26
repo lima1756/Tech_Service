@@ -129,7 +129,7 @@
         <div class="row">
           <div class="header-section text-center">
             <h2>Registrate</h2>
-            <p>¿Eres parte de la empresa?, ¿Que esperas para registrarte?<br> Es gratis :D</p>
+            <p>Esta herramienta tiene la intención de disminuir costos, simplificar tareas y permitir una mayor eficiencia de trabajo para todos. <br>¿Que esperas para registrarte?</p>
             <hr class="bottom-line">
           </div>
           <div id="error" class="alert alert-danger" style="visibility:hidden;display: none;"></div>
