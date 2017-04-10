@@ -51,8 +51,8 @@
                         <h3 id="user">{{$u->nombre}} {{$u->apellido}}
                             <span class="pull-right">
                                 <a href="/dashboard/newUsers/SU/{{$u->id}}"><button class="btn btn-success">Nuevo SU</button></a>
-                                <a href="/dashboard/newUsers/user/{{$u->id}}"><button class="btn btn-warning">Nuevo usuario</button></a>
-                                <a href="/dashboard/newUsers/delete/{{$u->id}}"><button class="btn btn-danger">Denegar</button></a>
+                                <a href="/dashboard/newUsers/user/{{$u->id}}"><button class="btn btn-warning">Nuevo usuario</button>
+                                <a href="/dashboard/newUsers/delete/{{$u->id}}"><button class="btn btn-danger">Denegar</button>
                             </span>
                         </h3>  
                     </div>
