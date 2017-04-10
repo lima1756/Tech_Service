@@ -1,8 +1,6 @@
 @extends('layouts.SULayout')
 
 @section('header')
-<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=y61s0lotp9kdw5vr3datam19ilfgk90egk7lmkypf7lcjdl9	"></script>
-  <script>tinymce.init({ selector:'textarea' });</script>
 <?php
     $questions= DB::table('knowledge')->get();    
 ?>
@@ -48,9 +46,9 @@
                 <thead>
                     <tr>
                         <th>Seleccionar</th>
-                        <th>Titulo</th>
-                        <th>Etiquetas</th>
-                        <th>Visitas</th>
+                        <th>Tema</th>
+                        <th>Pregunta</th>
+                        <th>Respuesta</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,9 +57,9 @@
                     <td><label class="btn active">
                         {{ Form::radio('ticket', $q->id, false, ['id'=> 'radio'.$q->id, 'style'=>'display:none;']) }}<i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i>
                     </label></td>
-                        <td>{{ $q->titulo }}</td>
                         <td>{{ $q->tema }}</td>
-                        <td>{{ $q->visitas }}</td>
+                        <td>{{ $q->pregunta }}</td>
+                        <td>{{ $q->respuesta }}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -89,12 +87,12 @@
                         <input type="text" name="input_tema" id="input_tema" class="form-control" style="display:none;"/>
                     </div>
                     <div class="form-group">
-                        <label for="Titulo">Titulo:</label>
-                        <input type="text" name="Titulo" id="Titulo" class="form-control"/>
+                        <label for="pregunta">Pregunta:</label>
+                        <input type="text" name="pregunta" id="pregunta" class="form-control"/>
                     </div>
                     <div class="form-group">
-                        <label for="contenido">Contenido:</label>
-                        <textarea name="contenido" id="contenido" class="form-control"></textarea>
+                        <label for="respuesta">Respuesta:</label>
+                        <textarea name="respuesta" id="respuesta" class="form-control"></textarea>
                     </div>
                     <div class="form-group">
                         <input type="number" id="id" name="id" hidden/>
@@ -136,9 +134,9 @@
                   bAutoWidth: false , 
                   aoColumns : [
                       { sWidth: '10%' },
-                      { sWidth: '60%' },
+                      { sWidth: '15%' },
                       { sWidth: '10%' },
-                      { sWidth: '10%' },
+                      { sWidth: '65%' },
 
                   ],
                   "order": [[ 1, "desc" ]]
