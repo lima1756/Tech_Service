@@ -87,6 +87,8 @@ Route::post('/ajaxFAQ', 'getFAQSU@index')->middleware('checkSU');
 
 Route::post('/dashboard/knowledge/submit', 'getFAQSU@submit')->middleware('checkSU');
 
+Route::post('/dashboard/knowledge/drop', 'getFAQSU@drop')->middleware('checkSU');
+
 Route::get('/dashboard/llamadas/{id}', function($id) {
     return view('llamadas', ['id'=>$id]);
 })->middleware('checkSU');

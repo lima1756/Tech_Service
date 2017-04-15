@@ -1,8 +1,6 @@
 @extends('layouts.SULayout')
 
 @section('header')
-<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=y61s0lotp9kdw5vr3datam19ilfgk90egk7lmkypf7lcjdl9	"></script>
-  <script>tinymce.init({ selector:'textarea' });</script>
 <?php
     $questions= DB::table('knowledge')->get();    
 ?>
@@ -26,6 +24,13 @@
     </style>
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
+    
+    <!-- include summernote css/js-->
+    <link href="/dist/summernote.css" rel="stylesheet">
+    <script src="/dist/summernote.js"></script>
+
+    <!-- include summernote-es-ES -->
+    <script src="/dist/lang/summernote-es-ES.js"></script>
 @endsection
 
 @section('content')
@@ -34,7 +39,7 @@
             <h1 class="page-header">knowledge</h1>
         </div>
         <div class="col-med-12">
-            <a href="#pregunta-container"><button class="btn btn-info btn-lg btn-block" id="btn_newQuestiom">Crear nueva entrada</button></a>
+            <button class="btn btn-info btn-lg btn-block" id="btn_newQuestiom">Crear nueva entrada</button>
         </div>
         <div class="col-med-12">
             <br>
@@ -49,7 +54,8 @@
                     <tr>
                         <th>Seleccionar</th>
                         <th>Titulo</th>
-                        <th>Etiquetas</th>
+                        <th>Etiqueta</th>
+                        <th>Fecha</th>
                         <th>Visitas</th>
                     </tr>
                 </thead>
@@ -57,10 +63,11 @@
                 @foreach ($questions as $q)
                     <tr>
                     <td><label class="btn active">
-                        {{ Form::radio('ticket', $q->id, false, ['id'=> 'radio'.$q->id, 'style'=>'display:none;']) }}<i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i>
+                        {{ Form::radio('entrada', $q->id, false, ['id'=> 'radio'.$q->id, 'href' => '#pregunta-container' ,'style'=>'display:none;']) }}<i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i>
                     </label></td>
                         <td>{{ $q->titulo }}</td>
                         <td>{{ $q->tema }}</td>
+                        <td><?php echo date_format(new dateTime($q->fecha_hora), 'd-m-Y H:i:s'); ?></td>
                         <td>{{ $q->visitas }}</td>
                     </tr>
                 @endforeach
@@ -76,7 +83,7 @@
     <section id="pregunta-container" class="section-padding" style="display:none;">
         <div class="panel panel-default">
             <div class="panel-body">
-                <form action="/dashboard/knowledge/submit" method="post">
+                <form action="/dashboard/knowledge/submit" method="post" id="formulario">
                     <div class="form-group">
                         <label>Tema:</label>
                         <select id="select_tema" name="select_tema" class="form-control">
@@ -94,13 +101,14 @@
                     </div>
                     <div class="form-group">
                         <label for="contenido">Contenido:</label>
-                        <textarea name="contenido" id="contenido" class="form-control"></textarea>
+                        <textarea  id="summernote" name="content"></textarea >
                     </div>
                     <div class="form-group">
                         <input type="number" id="id" name="id" hidden/>
                         {{ csrf_field() }}
-                        <input type="submit" value="Guardar" class="btn btn-success"/>
-                        <input type="submit" class="btn btn-danger" value="Eliminar"/>
+                        <button onclick="saveF(); return false;" id="guardar" class="btn btn-success">Guardar</button>
+                        <button onclick="resetear(); return false;" id="resetear" class="btn btn-warning" style="display:none;">Resetear</button>
+                        <button onclick="deleteF(); return false;" id="eliminar" class="btn btn-danger" />Eliminar</button>
                     </div>
                 </form>
             </div>
@@ -114,7 +122,9 @@
 
 ?>
 <script>
+var json = JSON;
             $(document).ready( function () {
+                //DataTable
                 $('#knowledge').DataTable( {
                   "language": {
                       "decimal":        ".",
@@ -135,14 +145,21 @@
                   },
                   bAutoWidth: false , 
                   aoColumns : [
+                      { sWidth: '6%' },
+                      { sWidth: '54%' },
                       { sWidth: '10%' },
-                      { sWidth: '60%' },
                       { sWidth: '10%' },
-                      { sWidth: '10%' },
+                      { sWidth: '10%' }
 
                   ],
-                  "order": [[ 1, "desc" ]]
+                  "order": [[ 3, "desc" ]]
                 });
+            //Summernote
+            $('#summernote').summernote({
+                height: 300,
+                lang:   'es-ES'
+            });
+            //Selector de tema
              $('#select_tema').on('change', function() {
                 if($('#select_tema').val()=="null")
                 {
@@ -155,16 +172,17 @@
                     $('#input_tema').hide();
                 }
              });
-             $('input[type=radio][name=ticket]').change(function() {
+             //Ajax para obtencion de datos en seleccion
+             $('input[type=radio][name=entrada]').change(function() {
                 var csrfVal="{{ csrf_token() }}";
                 @foreach ($questions as $key => $q)
                     @if($key==0)
                         if (this.value == {{$q->id}}) {
-                            id=$('input:radio[name=ticket]:checked').val();
+                            id=$('input:radio[name=entrada]:checked').val();
                         }
                     @else
                         else if (this.value == {{$q->id}}) {
-                            id=$('input:radio[name=ticket]:checked').val();
+                            id=$('input:radio[name=entrada]:checked').val();
                         }
                     @endif
                 @endforeach
@@ -177,26 +195,66 @@
                     'id': id
                 },
                 function(data, status){
-                    var json = JSON.parse(data);
-                    var answer = json.respuesta.replace(/\n/g, "<br />");
+                    json = JSON.parse(data);
                     $('#pregunta-container').show();
-                    $('#pregunta').val(json.pregunta);
-                    $('#respuesta').html(answer);
+                    $('#Titulo').val(json.titulo);
+                    $('#summernote').summernote('code', json.contenido);
+                    $('#resetear').show();
                     $('#id').val(json.id);
                     $('#select_tema').val(json.tema);
+                    $('#eliminar').show();
+                    $('#label_input_tema').hide();
+                    $('#input_tema').hide();
+                    $('html, body').animate({
+                        scrollTop: $("#pregunta-container").offset().top
+                    }, 1000);
                 });
             });
+            //Nuevo knowledge
             $("#btn_newQuestiom").click(function(){
+                $('input[type=radio][name=entrada]').prop('checked', false);
                 $('#pregunta-container').show();
-                $('#pregunta').val("");
-                $('#respuesta').html("");
+                $('#Titulo').val("");
+                $('#summernote').summernote('code', "");
                 $('#id').val(null);
                 $('#label_input_tema').show();
                 $('#input_tema').show();
                 $('#select_tema').val("null");
+                $('#resetear').hide();
+                $('#eliminar').hide();
+                $('html, body').animate({
+                    scrollTop: $("#pregunta-container").offset().top
+                }, 1000);
             }); 
-            } );
 
+            
+
+            } );
+            function resetear()
+            {
+                
+                $('#pregunta-container').show();
+                $('#Titulo').val(json.titulo);
+                $('#summernote').summernote('code', json.contenido);
+                $('#id').val(json.id);
+                $('#select_tema').val(json.tema);
+                
+            }
+
+            function saveF()
+            {
+                $('#formulario').prop('action', '/dashboard/knowledge/submit');
+                
+                $('#formulario').submit();
+            }
+
+            function deleteF()
+            {
+                $('#formulario').prop('action', '/dashboard/knowledge/drop');
+                
+                $('#formulario').submit();
+            }
+            
 </script>
 
 @endsection
